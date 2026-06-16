@@ -1,3 +1,10 @@
 {
-    "savedInstancesToString":""
+  "captureViewpoint": true,
+  "captureLayers": true,
+  "captureFilters": true,
+  "captureBasemap": true,
+  "captureTime": false,
+  "captureGraphics": true,
+  "maxInstances": 0,
+  "defaultInstanceName": ""
 }

@@ -1,18 +1,18 @@
 {
-    "name": "saveInstance",
-    "label": "Save Instance",
-    "type": "widget",
-    "version": "1.0.5",
-    "exbVersion": "1.17.0",
-    "author": "Sven Jensen",
-    "description": "Allow user to save the extent of the map, layer(s) status, graphcis.. etc.",
-    "copyright": "",
-    "properties": {},
-    "translatedLocales": [
-      "en"
-    ],
-    "defaultSize": {
-      "width": 250,
-      "height": 450
-    }
+  "name": "saveInstance",
+  "label": "Save Instance",
+  "type": "widget",
+  "version": "2.0.0",
+  "exbVersion": "1.17.0",
+  "author": "Sven Jensen (jensengis.com); accessibility and feature updates by Brian McLeer, City of Grand Junction, CO",
+  "description": "Save, load and share the state of your map, extent/viewpoint, layer visibility & opacity, definition expressions, basemap, time and graphics, stored locally in the browser. Rebuilt for accessibility (WCAG 2.1 AA).",
+  "copyright": "",
+  "properties": {},
+  "translatedLocales": [
+    "en"
+  ],
+  "defaultSize": {
+    "width": 320,
+    "height": 520
   }
+}

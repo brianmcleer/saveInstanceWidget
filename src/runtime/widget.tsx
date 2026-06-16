@@ -1,1114 +1,878 @@
-import { React, type AllWidgetProps } from 'jimu-core'
-import { type IMConfig } from '../config' // Ensure that the '../config' module exists and is correctly named
+/** @jsx jsx */
+import {
+  React,
+  jsx,
+  css,
+  hooks,
+  type AllWidgetProps
+} from 'jimu-core'
+import { type IMConfig } from '../config'
 import { JimuMapView, JimuMapViewComponent } from 'jimu-arcgis'
-import { useEffect, useState } from 'react';
-import Extent from 'esri/geometry/Extent';
-import Graphic from "@arcgis/core/Graphic.js";
-import Basemap from "@arcgis/core/Basemap.js";
-import { Loading } from 'jimu-ui'
-import * as reactiveUtils from "@arcgis/core/core/reactiveUtils.js";
-import Collection from "@arcgis/core/core/Collection.js";
-import Layer from "@arcgis/core/layers/Layer.js";
+import {
+  Button,
+  TextInput,
+  Label,
+  Loading,
+  LoadingType,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert,
+  Tooltip,
+  Select,
+  Option
+} from 'jimu-ui'
+import Extent from '@arcgis/core/geometry/Extent.js'
+import Viewpoint from '@arcgis/core/Viewpoint.js'
+import Graphic from '@arcgis/core/Graphic.js'
+import Basemap from '@arcgis/core/Basemap.js'
+import TimeExtent from '@arcgis/core/time/TimeExtent.js'
+import Collection from '@arcgis/core/core/Collection.js'
+import defaultMessages from './translations/default'
 
 /**
- * @author Sven Jensen
- * @version 1.0.1
- * 
- * The Save Instance widget developed by Sven Jensen, 2025.
+ * Save Instance, rebuilt for accessibility (WCAG 2.1 AA) and a wider set of
+ * captured map state. Instances are stored in the browser's localStorage.
+ *
+ * @author Sven Jensen, 2025
+ * @version 2.0.0
  */
 
-const Widget = (props: AllWidgetProps<IMConfig>) => {
+const STORAGE_KEY = 'saveInstanceWidgetInstances'
+const SCHEMA_VERSION = 2
+const DRAW_GROUP_LAYER_ID = 'jimu-draw'
 
-    const [jimuMapView, setJimuMapView] = useState(null);
-    const [currentInstanceName, setCurrentInstanceName] = useState("");
-    
-    const [showFunctionLegend, setShowFunctionLegend] = useState(false);
-    const [savedInstances, setSavedInstances] = useState([]);
+// Calcite web component, registered globally by Experience Builder. Typed as a
+// dynamic tag so it is valid JSX under the emotion (jimu-core) jsx pragma.
+const CalciteIcon: any = 'calcite-icon'
 
-    const [currentlyLoadingIndex, setCurrentlyLoadingIndex] = useState(-1);
+type SortKey = 'name-asc' | 'name-desc' | 'date-desc' | 'date-asc'
+type StatusKind = 'success' | 'warning' | 'error'
 
+interface StatusMessage { kind: StatusKind, text: string }
 
-      // Esri color ramps - Blue 19
-    // #00497cff,#0062a8ff,#007cd3ff,#00b7ffff
-    const blue19Colors = ["#00497cff", "#0062a8ff", "#007cd3ff", "#00b7ffff"];
-    const storageKey = "saveInstanceWidgetInstances";
-    const jimuDrawGroupLayerIdIdentifier = "jimu-draw";
+type ActiveModal =
+  | { kind: 'rename', name: string, value: string }
+  | { kind: 'delete', name: string }
+  | { kind: 'replace', dupes: string[], incoming: any[] }
+  | null
 
-
-
-    useEffect(() => {
-      loadSavedInstancesFromStorage();
-    },[])
-
-     /**
-       * Description: Handles the change of the active view.
-       * @param {type} jmv - The new active view
-       * @return {void}
-       */
-      const activeViewChangeHandler = (jmv: JimuMapView) => {
-        if (jmv) {
-
-                  // Basic example of watching for changes on a boolean property
-        reactiveUtils.watch(
-          // getValue function
-          () => jmv.view.updating,
-          // callback
-          (updating) => {
-            if(updating){
-            }else{
-              setCurrentlyLoadingIndex(-1)
-            }
-          });
-
-          setJimuMapView(jmv);
-        }
-      }; 
-
-
-      //Get the name,webmapId,extent,layers,graphics
-      //getMapInstanceData()
-      /**
-       * returns the instance object for the current map
-       * @returns {Object} map settings for instance
-       */
-      const getSettingsForCurrentMap = async () => {        
-        // if(isLoading){
-        //   const shouldSave = window.confirm("The map is currently updating. Are you sure you want to save the current instance?");
-        //   if(!shouldSave){
-        //     return null
-        //   }
-        // }
-        if (!jimuMapView) return null;
-
-
-        if(currentInstanceName === ""){
-          alert("Please enter an instance name")
-          return null
-        }
-
-        //check if there is an instance with the same name as currentInstanceName
-        const duplicateInstance = savedInstances.filter(s => s.name === currentInstanceName);
-        if(duplicateInstance.length > 0){
-          alert(`The instance "${currentInstanceName}" already exists, please choose another name`)
-          return null
-        }
-
-
-        const settings = {
-          name: currentInstanceName,
-          webmapId: jimuMapView.view.map.portalItem.id,
-          extent: jimuMapView.view.extent.toJSON(),
-          layers: [],
-          graphics: jimuMapView.view.graphics.toArray(),
-          basemap: jimuMapView.view.map.basemap.toJSON()
-        };
-
-        //let settingsGraphics;
-
-        try {
-          const layerSettings = await getLayerSettingsForCurrentMap();
-          settings.layers = layerSettings;
-          // settingsGraphics = layerSettings[1];
-        } catch (err) {
-          console.error("An error occurred while getting the layers from the current map.", err);
-        }
-
-        settings.graphics = getGraphicsForCurrentMap();
-
-        
-        const updatedSavedInstances = [...savedInstances, settings];
-        setSavedInstances(updatedSavedInstances);
-
-
-        storeInstances(updatedSavedInstances);
-        return settings;
-      };
-
-
-      /**
-       * Collects all graphics from the current map view and the graphics layers.
-       * @param {Array} graphicsLayersGraphics Graphics from the graphics layers.
-       * @returns {Array} An array of graphics in JSON format.
-       */
-      function getGraphicsForCurrentMap(){
-        const graphicsList = []
-        
-        //Collect graphics from view.graphics
-        const viewGraphics = jimuMapView.view.graphics;
-        //store each graphic.toJSON() in the gralphicsList
-        viewGraphics.forEach(graphic => {
-          graphicsList.push(graphic.toJSON());
-        });
-
-        return graphicsList
-      }
-    
-
-/**
- * Represents a layer or sublayer node in the hierarchy tree.
- */
-interface LayerHierarchyNode {
-  layerSettings: {};
-  subLayers: LayerHierarchyNode[]; // subLayers is an array of nodes
-  subLayersType: string;
+// -------------------------------------------------------------------------
+// Unicode-safe base64 (btoa/atob only handle Latin-1 and throw on emoji etc.)
+// -------------------------------------------------------------------------
+function toBase64 (str: string): string {
+  const bytes = new TextEncoder().encode(str)
+  let binary = ''
+  const chunk = 0x8000
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk) as unknown as number[])
+  }
+  return btoa(binary)
 }
 
-/**
-* Recursively builds a hierarchical array structure of layers and sublayers.
-*
-* @param {Collection<Layer>} layersToProcess - The collection of layers to process at the current level.
-* @returns {LayerHierarchyNode[]} An array representing the hierarchical structure
-* of the layers provided in layersToProcess.
-*/
-function buildLayerHierarchyRecursive(layersToProcess: Collection): LayerHierarchyNode[] {
-  const hierarchy: LayerHierarchyNode[] = [];
+function fromBase64 (b64: string): string {
+  const binary = atob(b64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  try {
+    // v2 writes UTF-8; this also decodes plain-ASCII v1 data correctly.
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+  } catch (e) {
+    // v1 used btoa() directly (Latin-1). Fall back to the raw byte string,
+    // which is exactly what v1's atob() produced.
+    return binary
+  }
+}
 
-  // Base case: If there are no layers in the current collection, return an empty array.
-  if (!layersToProcess || layersToProcess.length === 0) {
-      return hierarchy;
+function storageAvailable (): boolean {
+  try {
+    const x = '__si_test__'
+    window.localStorage.setItem(x, x)
+    window.localStorage.removeItem(x)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+/** Normalize/upgrade an instance object to the current schema. */
+function migrateInstance (raw: any): any {
+  if (!raw || typeof raw !== 'object' || typeof raw.name !== 'string') return null
+  // v1 did not tag top-level view graphics with the instance name, so clear and
+  // dedupe by instance would miss them. Backfill the attribute on migration.
+  const graphics = (Array.isArray(raw.graphics) ? raw.graphics : []).map((g: any) =>
+    (g && typeof g === 'object')
+      ? { ...g, attributes: { ...(g.attributes || {}), instance: g?.attributes?.instance ?? raw.name } }
+      : g)
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    name: raw.name,
+    createdAt: raw.createdAt || new Date().toISOString(),
+    webmapId: raw.webmapId ?? null,
+    viewpoint: raw.viewpoint ?? null,
+    extent: raw.extent ?? null,
+    timeExtent: raw.timeExtent ?? null,
+    basemap: raw.basemap ?? null,
+    layers: Array.isArray(raw.layers) ? raw.layers : [],
+    graphics
+  }
+}
+
+const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
+  const translate = hooks.useTranslation(defaultMessages)
+  const config = props.config
+
+  const [jimuMapView, setJimuMapView] = React.useState<JimuMapView>(null)
+  const [savedInstances, setSavedInstances] = React.useState<any[]>([])
+  const [nameInput, setNameInput] = React.useState('')
+  const [search, setSearch] = React.useState('')
+  const [sort, setSort] = React.useState<SortKey>('date-desc')
+  const [loadingName, setLoadingName] = React.useState<string | null>(null)
+  const [showLegend, setShowLegend] = React.useState(false)
+  const [status, setStatus] = React.useState<StatusMessage>(null)
+  const [modal, setModal] = React.useState<ActiveModal>(null)
+
+  const statusTimer = React.useRef<number | null>(null)
+  const defaultLoadedRef = React.useRef(false)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
+  const nameInputId = React.useRef(`si-name-${props.id}`).current
+  const searchInputId = React.useRef(`si-search-${props.id}`).current
+
+  // ---------------------------------------------------------------------
+  // Status banner helper (announced to screen readers via the Alert region)
+  // ---------------------------------------------------------------------
+  const announce = React.useCallback((kind: StatusKind, text: string) => {
+    setStatus({ kind, text })
+    if (statusTimer.current) window.clearTimeout(statusTimer.current)
+    if (kind === 'success') {
+      statusTimer.current = window.setTimeout(() => { setStatus(null) }, 5000)
+    }
+  }, [])
+
+  React.useEffect(() => () => { if (statusTimer.current) window.clearTimeout(statusTimer.current) }, [])
+
+  // ---------------------------------------------------------------------
+  // Storage
+  // ---------------------------------------------------------------------
+  const loadFromStorage = React.useCallback(() => {
+    if (!storageAvailable()) {
+      announce('warning', translate('errStorageUnavailable'))
+      return
+    }
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (!stored) return
+    try {
+      const parsed = JSON.parse(fromBase64(stored))
+      const migrated = (Array.isArray(parsed) ? parsed : []).map(migrateInstance).filter(Boolean)
+      setSavedInstances(migrated)
+    } catch (e) {
+      console.error('SaveInstance: could not read stored instances.', e)
+    }
+  }, [announce, translate])
+
+  /** Persist instances. Returns true on success. */
+  const persist = React.useCallback((instances: any[]): boolean => {
+    if (!storageAvailable()) {
+      announce('error', translate('errStorageUnavailable'))
+      return false
+    }
+    try {
+      window.localStorage.setItem(STORAGE_KEY, toBase64(JSON.stringify(instances)))
+      return true
+    } catch (e) {
+      const quota = e instanceof DOMException &&
+        (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')
+      announce('error', translate(quota ? 'errStorageQuota' : 'errStorage'))
+      return false
+    }
+  }, [announce, translate])
+
+  React.useEffect(() => { loadFromStorage() }, [loadFromStorage])
+
+  // ---------------------------------------------------------------------
+  // Map view
+  // ---------------------------------------------------------------------
+  const activeViewChangeHandler = (jmv: JimuMapView): void => {
+    if (jmv) setJimuMapView(jmv)
   }
 
-
-   let graphicsLayersGraphics = [];
-
-  // Iterate through the layers at the current level.
-  layersToProcess.forEach((item) => {
-      let subLayersType = 'null';
-      let immediateSublayers = new Collection<Layer>();
-
-      // Determine immediate sublayers for the current item.
-      // This logic works for various layer types including MapImageLayer, GroupLayer, etc.
-      // Use .toArray() because allSublayers/sublayers/layers return Collections.
-      // We add them to a new Collection to pass to the recursive call.
-      if (item.type !== "map-notes") {
-          if (item.allSublayers && item.allSublayers.length > 0) {
-              immediateSublayers.addMany(item.allSublayers);
-              subLayersType = 'allSublayers'
-          } else if (item.sublayers && item.sublayers.length > 0) {
-              immediateSublayers.addMany(item.sublayers);
-              subLayersType = 'sublayers'
-          } else if (item.layers && item.layers.length > 0) { // Specifically for GroupLayer type
-              immediateSublayers.addMany(item.layers);
-              subLayersType = 'layers'
-          } else if(item.subLayers && item.subLayers.length > 0){
-              immediateSublayers.addMany(item.subLayers);
-              subLayersType = 'subLayers'
-          }
-      }
-
-      // --- Recursive Step ---
-      // Recursively call the function to build the hierarchy for the immediate sublayers.
-      const nestedSublayerHierarchy = buildLayerHierarchyRecursive(immediateSublayers);
-
-      const layerSettings = getSettingsForLayer(item);
-
-      
-      // Create the node structure for the current item.
-      // The 'subLayers' property holds the array structure returned by the recursive call.
-      const currentNode: LayerHierarchyNode = {
-          'layerSettings': layerSettings,
-          'subLayers': nestedSublayerHierarchy, // This is the array of child nodes
-          'subLayersType': subLayersType
-      };
-
-      // Add the current node to the hierarchy array for this level.
-      hierarchy.push(currentNode);
-  });
-
-  // Return the array structure built for this level of the hierarchy.
-  return hierarchy;
-}
-
-/**
-* Initiates the building of the layer hierarchy tree starting from the map's top-level layers.
-*
-* @returns {LayerHierarchyNode[]} The complete hierarchical array structure of map layers.
-*/
-function getLayerHierarchyTree(): LayerHierarchyNode[] { //LayerHierarchyNode[] {
-  // Get the top-level layers from the map.
-  const topLevelLayers = jimuMapView.view.map.layers;
-
-  // Start the recursive process with the top-level layers.
-  const hierarchy = buildLayerHierarchyRecursive(topLevelLayers);
-
-
-  return hierarchy;
-}
-      /**
-       * Retrieves the settings for all layers in the current map view.
-       * @returns {Promise<Array>} A promise that resolves to an array of layer settings.
-       */
-      const getLayerSettingsForCurrentMap = async () => {
-        if (!jimuMapView) return [];
-
-        //let graphicsLayersGraphics = [];
-
-        try {
-          const settings = getLayerHierarchyTree();
-          // const settings = Object.values(layerObjects).map((layer, idx) => {
-
-          //   const layerSettings = getSettingsForLayer(layer);
-            
-          //   const layerSettingsObject = layerSettings[0];
-          //   const isGraphicsLayer = layerSettings[1] as Boolean;
-          //   const layerGraphicsJSON = layerSettings[2];
-            
-          //   if(isGraphicsLayer === true){ //If it is a graphics layer
-          //     graphicsLayersGraphics.push(...layerGraphicsJSON); //add it's graphics to the list
-          //   }
-          //   return layerSettingsObject;
-          // });
-
-          //return [settings, graphicsLayersGraphics];
-
-          return settings
-        } catch (err) {
-          console.error('SaveInstance error in getLayerSettingsForCurrentMap, error getting layersObjects  = ', err);
-          return [];
-        }
-      };
-
-/**
- * Retrieves settings for a specified layer.
- * @param {Object} layer - The layer object for which settings are to be retrieved.
- * @returns {Array} An array containing the layer settings object, a boolean indicating if the layer is a graphics layer, and an array of graphics in JSON format if applicable.
- */
-      const getSettingsForLayer = (layer) => {
-
-        let layerGraphicsJSON;
-        //let isGraphicsLayer = false;
-
-        const layerSettings = {
-          id: layer.id,
-          name: layer.title,
-          type: getLayerType(layer),
-          isVisible: layer.visible,
-          options: null,
-          graphics: null
-        };
-
-        switch (layerSettings.type) {
-          case "MapImageLayer": //used to be ArcGISDynamicMapServiceLayer
-            layerSettings.options = getOptionsForDynamicLayer(layer);
-            break;
-          case "FeatureLayer":
-            layerSettings.options = getOptionsForFeatureLayer(layer);
-            break;
-          case "TileLayer":
-            layerSettings.options = getOptionsForTiledLayer(layer);
-            break;
-          case "GroupLayer":
-            layerSettings.options = getOptionsForGroupLayer(layer)
-            break;
-          case "GraphicsLayer":
-            layerSettings.graphics = getGraphicsFromGraphicsLayer(layer)
-            break;
-          case "UnknownLayerType":
-            layerSettings.options = getOptionsForUnknownLayer(layer);
-            break;
-          default:
-            break;
-        }
-
-        return layerSettings
-      };
-
-      
-
-      /**
-       * Determines the type of the layer.
-       * @param {Object} layer - the layer whose type is to be determined
-       * @returns {string} the type of the layer
-       */
-      const getLayerType = (layer) => {
-        if (layer.type === 'feature') return 'FeatureLayer';
-        if (layer.type === 'tile') return 'TileLayer';
-        if (layer.type === 'map-image') return 'MapImageLayer';
-        if(layer.type === "group") return "GroupLayer";
-        if(layer.type === "graphics") return "GraphicsLayer";
-        return 'UnknownLayerType';
-      };
-
-      
-      /**
-       * Extracts all graphics from the given GraphicsLayer, and adds the current
-       * instance name to the graphics' attributes.
-       * @param {Object} layer - the GraphicsLayer from which to extract the graphics
-       * @returns {Array} an array of graphics in JSON format
-       */
-      const getGraphicsFromGraphicsLayer = (layer) => {
-        let layerGraphicsList = [];
-        const graphics = layer.graphics.toArray();
-        graphics.forEach(graphic => {
-          graphic.attributes = {
-            ...graphic.attributes,
-            "instance": currentInstanceName
-          }
-          layerGraphicsList.push(graphic.toJSON());
-        });
-        return layerGraphicsList
-      } 
-
-      /**
-       * Returns the options for an unknown layer type.
-       * @param {Object} layer - the layer for which to generate the options
-       * @returns {Object} the options for the layer
-       */
-      function getOptionsForUnknownLayer(layer) {
-        const options = {
-          opacity: layer.opacity,
-          visibleTimeExtent: layer.visibleTimeExtent,
-        };
-        return options;
-      }
-
-      /**
-       * Returns the options for the given dynamic layer.
-       * @param {Object} layer - the dynamic layer for which to generate the options
-       * @returns {Object} the options for the dynamic layer
-       */
-      const getOptionsForDynamicLayer = (layer) => {
-        const options = {
-          opacity: layer.opacity,
-          refreshInterval: layer.refreshInterval,
-        };
-        return options;
-      };
-
-      /**
-       * Returns the options for the given feature layer.
-       * @param {Object} layer - the feature layer for which to generate the options
-       * @returns {Object} the options for the feature layer
-       */
-      const getOptionsForFeatureLayer = (layer) => {
-        const options = {
-          mode: layer.mode || 'on-demand',
-          outFields: ["*"],
-          opacity: layer.opacity,
-          refreshInterval: layer.refreshInterval,
-        };
-
-        return options;
-      };
-
-      /**
-       * Returns the options for the given tiled layer.
-       * @param {Object} layer - the tiled layer for which to generate the options
-       * @returns {Object} the options for the tiled layer
-       */
-
-      const getOptionsForTiledLayer = (layer) => {
-        const options = {
-          opacity: layer.opacity,
-          refreshInterval: layer.refreshInterval,
-        };
-
-        return options;
-      };
-
-      
-      /**
-       * Returns the options for the given group layer.
-       * @param {Object} layer - the group layer for which to generate the options
-       * @returns {Object} the options for the group layer
-       *
-       * The options for the group layer are gathered from the layer's properties
-       * and from the settings of the layers in it, which are gathered by calling
-       * getSettingsForLayer() on each of them.
-       */
-      const getOptionsForGroupLayer = (layer) => {
-        const options = {
-          opacity: layer.opacity,
-          refreshInterval: layer.refreshInterval,
-        };
-      
-        return options;
-      };
-
-
-
-
-
-    // Define interfaces for clarity based on your settings structure
-    interface SingleLayerSettings {
-      id: string | number; // Use number for sublayers of MapImageLayer if applicable
-      name: string;
-      type: string; // Or a more specific type/enum if known
-      isVisible: boolean;
-      options: Record<string, any>; // Dictionary of other options like opacity
-      graphics: any[];
+  // Optional: load a default instance once on startup
+  React.useEffect(() => {
+    if (defaultLoadedRef.current) return
+    const target = config?.defaultInstanceName
+    if (!jimuMapView || !target || savedInstances.length === 0) return
+    const found = savedInstances.find(i => i.name === target)
+    if (found) {
+      defaultLoadedRef.current = true
+      void loadInstance(found)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jimuMapView, savedInstances, config?.defaultInstanceName])
 
-    interface LayerSettingsNode {
-      layerSettings: SingleLayerSettings;
-      subLayers: LayerSettingsNode[]; // Nested array of sub-settings nodes
-      subLayersType: "allSublayers" | "sublayers" | "subLayers" | "layers" | "null"; // How to access live sublayers
+  // ---------------------------------------------------------------------
+  // Capture map state
+  // ---------------------------------------------------------------------
+  const getLayerType = (layer: any): string => {
+    switch (layer.type) {
+      case 'feature': return 'FeatureLayer'
+      case 'tile': return 'TileLayer'
+      case 'map-image': return 'MapImageLayer'
+      case 'group': return 'GroupLayer'
+      case 'graphics': return 'GraphicsLayer'
+      default: return 'UnknownLayerType'
     }
+  }
 
+  const getGraphicsFromGraphicsLayer = (layer: any, instanceName: string): any[] => {
+    return layer.graphics.toArray().map((graphic: any) => {
+      graphic.attributes = { ...graphic.attributes, instance: instanceName }
+      return graphic.toJSON()
+    })
+  }
 
-    /**
-    * Recursively applies settings from a settings structure to the corresponding layers on the map.
-    *
-    * @param {LayerSettingsNode[]} settingsNodes - Array of settings nodes for the current level of recursion.
-    * @param {Collection<Layer>} liveLayersCollection - The collection of live layers from the map that corresponds
-    * to the settingsNodes array at this level.
-    */
-    function applyLayerSettingsRecursive(settingsNodes: LayerSettingsNode[], liveLayersCollection: Collection, instanceName:string): void {
-      // Base case: If there are no settings nodes to process or no live layers to apply settings to, stop recursion.
-      if (!settingsNodes || settingsNodes.length === 0 || !liveLayersCollection) {
-          return;
+  const getSettingsForLayer = (layer: any, instanceName: string): any => {
+    const settings: any = {
+      id: layer.id,
+      name: layer.title,
+      type: getLayerType(layer),
+      isVisible: layer.visible,
+      options: {},
+      graphics: null
+    }
+    if (config.captureLayers) {
+      settings.options.opacity = layer.opacity
+      if (typeof layer.refreshInterval === 'number') settings.options.refreshInterval = layer.refreshInterval
+    }
+    if (config.captureFilters && settings.type === 'FeatureLayer') {
+      if (layer.definitionExpression != null) settings.options.definitionExpression = layer.definitionExpression
+      if (typeof layer.labelsVisible === 'boolean') settings.options.labelsVisible = layer.labelsVisible
+    }
+    if (config.captureGraphics && settings.type === 'GraphicsLayer') {
+      settings.graphics = getGraphicsFromGraphicsLayer(layer, instanceName)
+    }
+    return settings
+  }
+
+  const buildLayerHierarchy = (layers: any, instanceName: string): any[] => {
+    const hierarchy: any[] = []
+    if (!layers || layers.length === 0) return hierarchy
+    layers.forEach((item: any) => {
+      let subLayersType = 'null'
+      const immediate = new Collection()
+      if (item.type !== 'map-notes') {
+        if (item.allSublayers && item.allSublayers.length > 0) { immediate.addMany(item.allSublayers); subLayersType = 'allSublayers' } else if (item.sublayers && item.sublayers.length > 0) { immediate.addMany(item.sublayers); subLayersType = 'sublayers' } else if (item.layers && item.layers.length > 0) { immediate.addMany(item.layers); subLayersType = 'layers' } else if (item.subLayers && item.subLayers.length > 0) { immediate.addMany(item.subLayers); subLayersType = 'subLayers' }
       }
+      hierarchy.push({
+        layerSettings: getSettingsForLayer(item, instanceName),
+        subLayers: buildLayerHierarchy(immediate, instanceName),
+        subLayersType
+      })
+    })
+    return hierarchy
+  }
 
-      // Loop through each layer/sublayer's settings node at the current level
-      settingsNodes.forEach((settingNode) => {
-          const setting = settingNode.layerSettings;
-          const settingsSubLayers = settingNode.subLayers;
-          const subLayersType = settingNode.subLayersType;
-
-
-                // If the layer from the settings is not found on the map (e.g., it was removed), skip it.
-            
-          if(setting.id.toString().includes(jimuDrawGroupLayerIdIdentifier) && setting.type === "GroupLayer"){
-            //this is the jimu draw widget layer.
-            //add all the graphics to the map.
-            //grab the settingsSubLayers.subLayers
-            settingsSubLayers.forEach((subLayer) => {
-              if(subLayer.layerSettings.type === "GraphicsLayer"){
-                setGraphicsOnMap(subLayer.layerSettings.graphics, instanceName);
-              }
-            })
-        }
-
-          // --- Find the corresponding live layer on the map ---
-          // Use the ID from the settings to find the actual layer object in the live collection.
-          const liveLayer = liveLayersCollection.find(layer => layer.id === setting.id);
-
-          if (!liveLayer) {
-              console.warn(`Layer with ID "${setting.id}" not found on the map. Settings cannot be applied for this layer.`);
-              return; // Move to the next setting node
-          }
-
-          // --- Apply settings to the found live layer ---
-
-          // Apply visibility
-          try {
-              liveLayer.visible = setting.isVisible;
-          } catch (error) {
-              console.warn(`Could not set visibility for layer "${liveLayer.id}":`, error);
-          }
-
-
-          // Apply other options (like opacity)
-          if (setting.options) {
-              for (const optionName in setting.options) {
-                  // Check if the layer object actually has this property before attempting to set it.
-                  // Some properties might only exist on specific layer types.
-                  // For simplicity, we'll attempt dynamic assignment, but be aware of potential errors.
-                  try {
-                      // Using 'as any' to bypass strict type checking for dynamic property assignment
-                      (liveLayer as any)[optionName] = setting.options[optionName];
-                  } catch (error) {
-                      console.warn(`Could not apply option "${optionName}" to layer "${liveLayer.id}":`, error);
-                  }
-              }
-          }
-
-          // --- Recurse for sublayers if they exist in the settings ---
-          if (settingsSubLayers && settingsSubLayers.length > 0) {
-              let liveSublayersCollection: Collection | undefined;
-
-              // Determine the correct property name on the live layer to access its immediate children,
-              // based on the 'subLayersType' saved in the settings.
-              // Need to cast the live layer to potentially different types as these properties
-              // might exist on specific Layer subclasses (MapImageLayer, GroupLayer).
-              switch (subLayersType) {
-                  case "allSublayers":
-                      // 'allSublayers' is typically on MapImageLayer
-                      liveSublayersCollection = liveLayer.allSublayers;
-                      break;
-                  case "sublayers":
-                      // 'sublayers' can be on MapImageLayer, ElevationLayer, etc.
-                      liveSublayersCollection = liveLayer.sublayers || liveLayer.sublayers; // Add GroupLayer as sometimes sublayers is there too
-                      break;
-                  case "layers":
-                    // 'layers' is typically on GroupLayer
-                    liveSublayersCollection = liveLayer.layers.items;
-                    break;
-                  case "subLayers":
-                      // 'layers' is typically on GroupLayer
-                      liveSublayersCollection = liveLayer.subLayers;
-                      break;
-
-                  default:
-                      // If subLayersType is 'null' or unexpected, there are no sublayers to process via property access
-                      console.warn(`Unknown or null subLayersType "${subLayersType}" for layer "${liveLayer.id}". Cannot recurse into live sublayers.`);
-                      liveSublayersCollection = undefined; // Ensure it's undefined
-                      break;
-              }
-
-
-              // If we successfully found the live collection of sublayers for the current layer,
-              // make the recursive call with the sub-settings and the live sub-collection.
-              if (liveSublayersCollection) {
-                  applyLayerSettingsRecursive(settingsSubLayers, liveSublayersCollection, instanceName);
-              } else {
-                  // This might happen if the layer type in the map doesn't match what was saved
-                  // or if the property didn't exist for some other reason.
-                  console.warn(`Could not find the live sublayer collection for layer "${liveLayer.id}" using type "${subLayersType}". Cannot apply settings to its children.`);
-              }
-          }
-      });
+  const buildInstance = (name: string): any => {
+    const view = jimuMapView.view
+    const instance: any = {
+      schemaVersion: SCHEMA_VERSION,
+      name,
+      createdAt: new Date().toISOString(),
+      webmapId: view.map?.portalItem?.id ?? null,
+      viewpoint: null,
+      extent: null,
+      timeExtent: null,
+      basemap: null,
+      layers: [],
+      graphics: []
     }
-
-
-    /**
-    * Entry point function to apply saved layer settings to the map.
-    *
-    * @param {LayerSettingsNode[]} settings - The hierarchical array structure of layer settings to apply.
-    */
-    function setLayersOnMap(settings: LayerSettingsNode[], instanceName:string): void {
-      if (!settings || settings.length === 0) {
-          console.log("No layer settings provided to apply.");
-          return;
+    if (config.captureViewpoint) {
+      instance.viewpoint = view.viewpoint?.toJSON() ?? null
+      instance.extent = view.extent?.toJSON() ?? null
+    }
+    if (config.captureTime && view.timeExtent) {
+      instance.timeExtent = {
+        start: view.timeExtent.start ? view.timeExtent.start.toISOString() : null,
+        end: view.timeExtent.end ? view.timeExtent.end.toISOString() : null
       }
-
-      // Start the recursive process with the top-level settings array
-      // and the map's top-level layers collection.
-      const topLevelLiveLayers = jimuMapView.view.map.layers;
-      applyLayerSettingsRecursive(settings, topLevelLiveLayers, instanceName);
-
-      console.log("Finished applying layer settings.");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /**
-             * Apply graphics to the map.
-             * @param {Array} graphics - An array of graphics in JSON format.
-             * @param {string} instanceName - The name of the instance to which the graphics belong.
-             * 
-             * This function first removes any existing graphics with the same instance name.
-             * Then it adds all the graphics in the graphics array.
-             */
-              function setGraphicsOnMap(graphics, instanceName){
-                //find any graphics with the same instance name
-                if(graphics.length === 0){
-                  console.warn("No graphics provided to apply.")
-                  return
-                }
-                let existingGraphics = jimuMapView.view.graphics.filter(function(graphic){
-                  return graphic?.attributes?.instance === instanceName 
-                })
-
-                
-                //remove all graphics with same instance name
-                if(existingGraphics.length > 0){
-                  jimuMapView.view.graphics.removeMany(existingGraphics)
-                }
-                
-                //add all the graphics
-                graphics.forEach(function(graphic){
-                  let graphicFromJSON = Graphic.fromJSON(graphic);
-                  jimuMapView.view.graphics.add(graphicFromJSON);
-                })
-
-              }
-
-
-
-              /**
-             * Apply the settings from the given instance to the current map
-             * @param {Object} sessionToLoad a instance
-             */
-            function loadInstance(instanceToLoad, index) {
-              setCurrentlyLoadingIndex(index)
-
-            //set the current loading instance index to the one that is currently loading
-
-
-              
-              // toggle layers
-              if (instanceToLoad.layers) {
-                setLayersOnMap(instanceToLoad.layers, instanceToLoad.name);
-            }
-
-              
-              setGraphicsOnMap(instanceToLoad.graphics, instanceToLoad.name);
-
-                
-              // }
-              let extentToLoad;
-
-              //set basemap
-              if (instanceToLoad.basemap) {
-                let newBaseMap = Basemap.fromJSON(instanceToLoad.basemap);
-                jimuMapView.view.map.basemap = newBaseMap;
-              }
-
-              //  zoom the map
-              if (instanceToLoad.extent) {
-                  extentToLoad = Extent.fromJSON(instanceToLoad.extent);
-                  jimuMapView.view.goTo(extentToLoad);
-              }        
-          }
-        
-
-/**
- * Checks if the given type of web storage is available and functional.
- * Attempts to set and remove an item to verify storage capabilities.
- *
- * @param {string} type - The type of storage to check, e.g., "localStorage" or "sessionStorage".
- * @returns {boolean} - True if storage is available and can be used, false otherwise.
- */
-
-          function storageAvailable(type) {
-            let storage;
-            try {
-              storage = window[type];
-              const x = "__storage_test__";
-              storage.setItem(x, x);
-              storage.removeItem(x);
-              return true;
-            } catch (e) {
-              return (
-                e instanceof DOMException &&
-                e.name === "QuotaExceededError" &&
-                // acknowledge QuotaExceededError only if there's something already stored
-                storage &&
-                storage.length !== 0
-              );
-            }
-          }
-
-
-   
-/**
- * Loads saved instances from local storage.
- * If local storage is available, retrieves, decodes, and parses the saved instances JSON string.
- * Updates the current instances with the retrieved saved instances.
- * Logs a message if no saved instances are found.
- * 
- * Requires the 'storageAvailable' function to check local storage availability
- * and the 'setSavedInstances' function to update the current instances.
- */
-      function loadSavedInstancesFromStorage() {
-        if (storageAvailable("localStorage")) {
-          // Yippee! We can use localStorage awesomeness
-          var storedString = "",
-          storedInstances = null;
-
-          storedString = localStorage.getItem(storageKey);
-          if (!storedString) {
-              console.log("No saved instances found.");
-              return;
-          }
-
-          const decodedStoredInstances = atob(storedString);
-          storedInstances = JSON.parse(decodedStoredInstances);
-
-          // replace to current instances
-          setSavedInstances(storedInstances);
-        } else {
-          // Too bad, no localStorage for us
-        }
+    if (config.captureBasemap && view.map?.basemap) {
+      instance.basemap = view.map.basemap.toJSON()
+    }
+    if (config.captureLayers || config.captureFilters || config.captureGraphics) {
+      try {
+        instance.layers = buildLayerHierarchy(view.map.layers, name)
+      } catch (e) {
+        console.error('SaveInstance: error reading layers.', e)
       }
-
-      /**
-         * save the current instances to local storage
-      */
-      function storeInstances(savedInstances) {
-        if (storageAvailable("localStorage")) {
-          // Yippee! We can use localStorage awesomeness
-          const savedInstancesJSON = JSON.stringify(savedInstances);
-          const savedInstancesEncoded = btoa(savedInstancesJSON);
-          localStorage.setItem(storageKey, savedInstancesEncoded);
-
-        } else {
-          // Too bad, no localStorage for us
-        }
     }
+    if (config.captureGraphics) {
+      instance.graphics = view.graphics.toArray().map((g: any) => g.toJSON())
+    }
+    return instance
+  }
 
-  /**
-   * Edit the name of an instance
-   * @param {string} instanceName - the name of the instance to be edited
-   */
-    function editInstanceName(instanceName){
-      //open a prompt window asking what they want to change {instanceName} to, and also have a cancel button
-      const newName = window.prompt("Enter a new name for the instance " + instanceName + ":");
-      if(newName){
-        //check that the new name is not already in use
-        const duplicateInstances = savedInstances.filter(s => s.name === newName);
-        if(duplicateInstances.length > 0){
-          alert(`The instance "${newName}" already exists, please choose another name`)
-          return
-        }
+  const handleSave = (): void => {
+    if (!jimuMapView) { announce('error', translate('errNoMap')); return }
+    const name = nameInput.trim()
+    if (!name) { announce('error', translate('errNoName')); return }
+    if (savedInstances.some(i => i.name === name)) {
+      announce('error', translate('errDuplicate', { name }))
+      return
+    }
+    if (config.maxInstances > 0 && savedInstances.length >= config.maxInstances) {
+      announce('error', translate('errMaxInstances', { max: config.maxInstances }))
+      return
+    }
+    const instance = buildInstance(name)
+    const updated = [...savedInstances, instance]
+    if (persist(updated)) {
+      setSavedInstances(updated)
+      setNameInput('')
+      announce('success', translate('saved', { name }))
+    }
+  }
 
-        const savedInstancesCopy = [...savedInstances];
-        savedInstancesCopy.forEach(instance => {
-          if(instance.name === instanceName){
-            instance.name = newName;
-            instance.graphics.forEach(graphic => {
-                graphic.attributes.instance = newName
-            })
+  // ---------------------------------------------------------------------
+  // Apply / load map state
+  // ---------------------------------------------------------------------
+  const setGraphicsOnMap = (graphics: any[], instanceName: string): void => {
+    if (!graphics || graphics.length === 0) return
+    const existing = jimuMapView.view.graphics.filter((g: any) => g?.attributes?.instance === instanceName)
+    if (existing.length > 0) jimuMapView.view.graphics.removeMany(existing)
+    graphics.forEach((g: any) => { jimuMapView.view.graphics.add(Graphic.fromJSON(g)) })
+  }
+
+  const applyLayerSettings = (nodes: any[], liveLayers: any, instanceName: string): void => {
+    if (!nodes || nodes.length === 0 || !liveLayers) return
+    nodes.forEach((node) => {
+      const setting = node.layerSettings
+      const subNodes = node.subLayers
+
+      // Restore Draw/Sketch graphics that were nested under the jimu-draw group
+      if (setting.id?.toString().includes(DRAW_GROUP_LAYER_ID) && setting.type === 'GroupLayer') {
+        subNodes?.forEach((sub: any) => {
+          if (sub.layerSettings.type === 'GraphicsLayer' && config.captureGraphics) {
+            setGraphicsOnMap(sub.layerSettings.graphics ?? [], instanceName)
           }
         })
-        setSavedInstances(savedInstancesCopy);
-        storeInstances(savedInstancesCopy);
       }
+
+      const live = liveLayers.find((l: any) => l.id === setting.id)
+      if (!live) {
+        console.warn(`SaveInstance: layer "${setting.id}" not found on the map.`)
+        return
+      }
+      if (config.captureLayers) {
+        try { live.visible = setting.isVisible } catch (e) { /* not settable */ }
+      }
+      if (setting.options) {
+        Object.keys(setting.options).forEach((key) => {
+          const captureOk =
+            (key === 'definitionExpression' || key === 'labelsVisible') ? config.captureFilters : config.captureLayers
+          if (!captureOk) return
+          try { (live as any)[key] = setting.options[key] } catch (e) { /* not settable */ }
+        })
+      }
+      if (subNodes && subNodes.length > 0) {
+        let liveSub: any
+        switch (node.subLayersType) {
+          case 'allSublayers': liveSub = live.allSublayers; break
+          case 'sublayers': liveSub = live.sublayers; break
+          case 'layers': liveSub = live.layers; break
+          case 'subLayers': liveSub = live.subLayers; break
+          default: liveSub = undefined
+        }
+        if (liveSub) applyLayerSettings(subNodes, liveSub, instanceName)
+      }
+    })
+  }
+
+  const loadInstance = async (instance: any): Promise<void> => {
+    if (!jimuMapView) { announce('error', translate('errNoMap')); return }
+    setLoadingName(instance.name)
+    const view = jimuMapView.view
+    let hadIssue = false
+
+    const currentMapId = view.map?.portalItem?.id ?? null
+    if (instance.webmapId && currentMapId && instance.webmapId !== currentMapId) {
+      announce('warning', translate('errWrongMap'))
     }
 
-    
-  /**
-   * Validate the uploaded file. If the uploaded file is valid JSON, it will
-   * be parsed and each instance will be added to the saved instances list.
-   * If an instance with the same name already exists, the user will be
-   * prompted to replace it.
-   * @param {string} uploadedString The uploaded file as a string.
-   */
-    function validateUploadedString(uploadedString:string){
-      //validate the uploaded file
+    try {
+      if (config.captureLayers || config.captureFilters || config.captureGraphics) {
+        if (instance.layers) applyLayerSettings(instance.layers, view.map.layers, instance.name)
+      }
+      if (config.captureGraphics) setGraphicsOnMap(instance.graphics, instance.name)
+
+      if (config.captureBasemap && instance.basemap) {
+        view.map.basemap = Basemap.fromJSON(instance.basemap)
+      }
+      if (config.captureTime && instance.timeExtent) {
+        view.timeExtent = new TimeExtent({
+          start: instance.timeExtent.start ? new Date(instance.timeExtent.start) : null,
+          end: instance.timeExtent.end ? new Date(instance.timeExtent.end) : null
+        })
+      }
+      if (config.captureViewpoint) {
+        if (instance.viewpoint) {
+          await view.goTo(Viewpoint.fromJSON(instance.viewpoint))
+        } else if (instance.extent) {
+          await view.goTo(Extent.fromJSON(instance.extent))
+        }
+      }
+    } catch (e: any) {
+      // goTo rejects when interrupted by another navigation, that is benign
+      if (e?.name !== 'AbortError') {
+        hadIssue = true
+        console.error('SaveInstance: error loading instance.', e)
+      }
+    } finally {
+      setLoadingName(null)
+    }
+
+    announce(hadIssue ? 'warning' : 'success',
+      translate(hadIssue ? 'errLoadFailed' : 'loaded', { name: instance.name }))
+  }
+
+  // ---------------------------------------------------------------------
+  // Rename / delete / clear
+  // ---------------------------------------------------------------------
+  const commitRename = (oldName: string, newName: string): void => {
+    const trimmed = newName.trim()
+    if (!trimmed) return
+    if (savedInstances.some(i => i.name === trimmed)) {
+      announce('error', translate('errDuplicate', { name: trimmed }))
+      return
+    }
+    const updated = savedInstances.map(inst => {
+      if (inst.name !== oldName) return inst
+      return {
+        ...inst,
+        name: trimmed,
+        graphics: (inst.graphics || []).map((g: any) =>
+          g?.attributes ? { ...g, attributes: { ...g.attributes, instance: trimmed } } : g)
+      }
+    })
+    if (persist(updated)) {
+      setSavedInstances(updated)
+      announce('success', translate('renamed', { name: trimmed }))
+    }
+    setModal(null)
+  }
+
+  const clearGraphics = (name: string): void => {
+    if (!jimuMapView) return
+    const existing = jimuMapView.view.graphics.filter((g: any) => g?.attributes?.instance === name)
+    jimuMapView.view.graphics.removeMany(existing)
+    announce('success', translate('graphicsCleared', { name }))
+  }
+
+  const commitDelete = (name: string): void => {
+    if (jimuMapView) {
+      const existing = jimuMapView.view.graphics.filter((g: any) => g?.attributes?.instance === name)
+      jimuMapView.view.graphics.removeMany(existing)
+    }
+    const updated = savedInstances.filter(i => i.name !== name)
+    if (persist(updated)) {
+      setSavedInstances(updated)
+      announce('success', translate('deleted', { name }))
+    }
+    setModal(null)
+  }
+
+  // ---------------------------------------------------------------------
+  // Import / export
+  // ---------------------------------------------------------------------
+  const isValidInstanceList = (data: any): boolean =>
+    Array.isArray(data) && data.every(d => d && typeof d === 'object' && typeof d.name === 'string')
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files?.[0]
+    if (event.target) event.target.value = ''
+    if (!file || !(file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt'))) {
+      announce('error', translate('errInvalidFile'))
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const text = e.target?.result
+      if (typeof text !== 'string') { announce('error', translate('errInvalidContent')); return }
+      let parsed: any
       try {
-        let decodedJSON = atob(uploadedString);
-        const parsed = JSON.parse(decodedJSON);
-        
-        const savedInstancesMap = new Map(savedInstances.map(inst => [inst.name, inst]));
-
-        parsed.forEach(newInstance => {
-          if (savedInstancesMap.has(newInstance.name)) {
-            const replace = window.confirm(`The instance "${newInstance.name}" already exists. Do you want to replace it?`);
-            if (replace) {
-              savedInstancesMap.set(newInstance.name, newInstance);
-            } else {
-              console.log(`User cancelled replacing "${newInstance.name}"`);
-            }
-          } else {
-            savedInstancesMap.set(newInstance.name, newInstance);
-          }
-        });
-        
-       
-        const updatedSavedInstances = Array.from(savedInstancesMap.values());
-        setSavedInstances(updatedSavedInstances);
-        storeInstances(updatedSavedInstances);
-        
+        parsed = JSON.parse(fromBase64(text))
       } catch (err) {
-        console.error("Invalid JSON input");
-      }
-    }
-      
-
-/**
- * Handles the file input change event. If a valid text file is uploaded,
- * it reads the file content and validates it. If the file is not a valid
- * text file, an alert is shown to the user.
- * 
- * @param {Event} event - The file input change event.
- */
-
-    const handleFileChange = (event) => {
-      const file = event.target.files?.[0];
-      if (file && file.type === "text/plain") {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const text = e.target?.result;
-          if (typeof text === 'string') {
-            validateUploadedString(text)
-          }
-        };
-        reader.readAsText(file);
-      } else {
-        alert("Please upload a valid .txt file.");
-      }
-    };
-
-/**
- * Initiates a download of the saved instances as a text file.
- * The file is named using the provided instance name and the current date and time.
- * @param {string} instanceName - The name to prefix the downloaded file with.
- */
-
-    const handleDownload = (instanceName, isAllInstances) => {
-
-      if(savedInstances.length === 0){
-        alert("There are no saved instances to download.")
+        announce('error', translate('errInvalidContent'))
         return
       }
-
-      let savedInstancesToDownload;
-      if(isAllInstances){
-        savedInstancesToDownload = savedInstances;
+      if (!isValidInstanceList(parsed)) { announce('error', translate('errInvalidContent')); return }
+      const incoming = parsed.map(migrateInstance).filter(Boolean)
+      const existingNames = new Set(savedInstances.map(i => i.name))
+      const dupes = incoming.filter(i => existingNames.has(i.name)).map(i => i.name)
+      if (dupes.length > 0) {
+        setModal({ kind: 'replace', dupes, incoming })
       } else {
-        savedInstancesToDownload = [savedInstances.find(instance => instance.name === instanceName)];
+        applyImport(incoming, false)
       }
-      const savedInstancesJSON = JSON.stringify(savedInstancesToDownload);
-      const savedInstancesEncoded = btoa(savedInstancesJSON);
-      const date = new Date();
-      const formattedDate = `${date.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}-${date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
-      const filename = `${instanceName}-${formattedDate}.txt`;
-  
-      const blob = new Blob([savedInstancesEncoded], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-  
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.click();
-  
-      URL.revokeObjectURL(url); // Clean up after download
-    };
-
-
-
-
-    /**
-     * Removes all graphics from the map that have the specified instance name.
-     * @param {string} instanceName - The name of the instance whose graphics are to be removed.
-     */
-    function removeInstanceGraphicsFromMap(instanceName){
-      let existingGraphics = jimuMapView.view.graphics.filter(function(graphic){
-        return graphic.attributes.instance === instanceName
-      })
-      jimuMapView.view.graphics.removeMany(existingGraphics)
     }
+    reader.readAsText(file)
+  }
 
-/**
- * Removes an instance and its associated graphics from the map.
- * Updates the saved instances list by filtering out the specified instance
- * and stores the updated list in local storage.
- * 
- * @param {string} instanceName - The name of the instance to be removed.
- */
-    function removeInstance(instanceName){
-      //prompt user if they are sure they want to remove the instance
-      const shouldRemove = window.confirm(`Are you sure you want to remove the instance "${instanceName}"?`);
-      if (!shouldRemove) {
-        return
+  const applyImport = (incoming: any[], replaceDupes: boolean): void => {
+    const map = new Map(savedInstances.map(i => [i.name, i]))
+    let count = 0
+    incoming.forEach((inst) => {
+      const exists = map.has(inst.name)
+      if (!exists || replaceDupes) { map.set(inst.name, inst); count++ }
+    })
+    const updated = Array.from(map.values())
+    if (persist(updated)) {
+      setSavedInstances(updated)
+      announce('success', translate('imported', { count }))
+    }
+    setModal(null)
+  }
+
+  const handleDownload = (name: string, all: boolean): void => {
+    if (savedInstances.length === 0) { announce('error', translate('errNothingToDownload')); return }
+    const toDownload = all ? savedInstances : [savedInstances.find(i => i.name === name)]
+    const encoded = toBase64(JSON.stringify(toDownload))
+    const now = new Date()
+    const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`
+    const filename = `${all ? 'all-instances' : name}-${stamp}.txt`
+    const blob = new Blob([encoded], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  // ---------------------------------------------------------------------
+  // Derived list (filter + sort)
+  // ---------------------------------------------------------------------
+  const visibleInstances = React.useMemo(() => {
+    const q = search.trim().toLowerCase()
+    const filtered = q ? savedInstances.filter(i => i.name.toLowerCase().includes(q)) : savedInstances.slice()
+    filtered.sort((a, b) => {
+      switch (sort) {
+        case 'name-asc': return a.name.localeCompare(b.name)
+        case 'name-desc': return b.name.localeCompare(a.name)
+        case 'date-asc': return (a.createdAt || '').localeCompare(b.createdAt || '')
+        default: return (b.createdAt || '').localeCompare(a.createdAt || '')
       }
+    })
+    return filtered
+  }, [savedInstances, search, sort])
 
-      removeInstanceGraphicsFromMap(instanceName)
-      const updatedSavedInstances = savedInstances.filter(instance => instance.name !== instanceName);
-      setSavedInstances(updatedSavedInstances)
-      storeInstances(updatedSavedInstances)
+  const formatDate = (iso: string): string => {
+    if (!iso) return ''
+    const d = new Date(iso)
+    return isNaN(d.getTime()) ? '' : d.toLocaleDateString()
+  }
+
+  // ---------------------------------------------------------------------
+  // Styles (theme-driven via EXB CSS vars, with safe light-mode fallbacks)
+  // ---------------------------------------------------------------------
+  const styles = css`
+    padding: 0.75rem;
+    color: var(--sys-color-surface-paper-text, inherit);
+    .si-sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
+    h3.si-heading { font-size: 0.95rem; margin: 0.25rem 0 0.5rem; }
+    .si-field { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.5rem; }
+    .si-hint { font-size: 0.75rem; opacity: 0.75; }
+    .si-toolbar { display: flex; gap: 0.5rem; align-items: flex-end; margin: 0.5rem 0; flex-wrap: wrap; }
+    .si-toolbar > * { flex: 1 1 8rem; min-width: 7rem; }
+    hr.si-rule { border: none; border-top: 1px solid var(--sys-color-divider-primary, rgba(110,110,110,0.35)); margin: 0.75rem 0; }
+    table.si-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
+    table.si-table caption { text-align: left; }
+    table.si-table th, table.si-table td {
+      border: 1px solid var(--sys-color-divider-primary, rgba(110,110,110,0.35));
+      padding: 0.25rem; text-align: center; vertical-align: middle;
+    }
+    table.si-table thead th {
+      background: var(--sys-color-primary-main, #076fe5);
+      color: var(--sys-color-primary-text, #ffffff);
+      font-weight: 600;
+    }
+    table.si-table th[scope="row"] { text-align: left; font-weight: 600; }
+    table.si-table tbody tr:nth-of-type(even) {
+      background: var(--sys-color-surface-background-hint, rgba(110,110,110,0.08));
+    }
+    .si-cell-btn { min-width: 1.75rem; }
+    .si-action-cell { padding: 0; }
+    .si-footer { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .si-footer > * { flex: 1 1 auto; }
+    .si-empty {
+      font-size: 0.8rem; padding: 0.75rem;
+      border: 1px dashed var(--sys-color-divider-primary, rgba(110,110,110,0.4));
+      border-radius: 4px;
+    }
+    .si-legend td:first-of-type { width: 2.25rem; }
+  `
 
-    
+  const iconBtn = (icon: string, label: string, onClick: () => void, busy = false): React.ReactElement => (
+    <Tooltip title={label} placement='top'>
+      <Button
+        type='tertiary'
+        size='sm'
+        className='si-cell-btn'
+        aria-label={label}
+        disabled={busy}
+        onClick={onClick}
+      >
+        {busy
+          ? <Loading type={LoadingType.Primary} width={14} height={14} />
+          : <CalciteIcon icon={icon} scale='s' aria-hidden='true' />}
+      </Button>
+    </Tooltip>
+  )
 
+  // ---------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------
+  const hasMap = props.useMapWidgetIds && props.useMapWidgetIds.length === 1
 
-    /**
-     * Render the list of saved instances as a table.
-     * Each instance is rendered as a table row with buttons to:
-     * - load the instance to the map
-     * - edit the instance name
-     * - download the instance
-     * - clear the instance graphics from the map
-     * - delete the instance
-     *
-     * If there are no saved instances, nothing is rendered.
-     */
-    function renderSavedInstances(){
-      if (savedInstances.length > 0) {
+  return (
+    <div className='jimu-widget' css={styles} role='region' aria-label={translate('_widgetLabel')}>
+      {hasMap && (
+        <JimuMapViewComponent
+          useMapWidgetId={props.useMapWidgetIds[0]}
+          onActiveViewChange={activeViewChangeHandler}
+        />
+      )}
 
-        return (
-          <div style={{display: 'flex', flexDirection: 'column', width: '90%', marginRight:'4%'}}>
-            <table style={{borderCollapse: 'collapse'}}>
-              <tbody>
+      {/* Status / errors, Alert announces to assistive tech */}
+      {status && (
+        <Alert
+          css={css`margin-bottom: 0.5rem;`}
+          type={status.kind}
+          text={status.text}
+          withIcon
+          closable
+          onClose={() => { setStatus(null) }}
+        />
+      )}
+
+      {/* Save */}
+      <h3 className='si-heading'>{translate('saveHeading')}</h3>
+      <div className='si-field'>
+        <Label for={nameInputId}>{translate('instanceNameLabel')}</Label>
+        <TextInput
+          id={nameInputId}
+          value={nameInput}
+          aria-describedby={`${nameInputId}-hint`}
+          onChange={(e) => { setNameInput(e.target.value) }}
+          onAcceptValue={() => { if (nameInput.trim()) handleSave() }}
+        />
+        <span id={`${nameInputId}-hint`} className='si-hint'>{translate('instanceNameHint')}</span>
+      </div>
+      <Button
+        type='primary'
+        size='sm'
+        disabled={!hasMap || nameInput.trim().length === 0}
+        onClick={handleSave}
+      >
+        {translate('saveInstance')}
+      </Button>
+
+      <hr className='si-rule' />
+
+      {/* Saved list */}
+      <h3 className='si-heading'>{translate('savedHeading')}</h3>
+
+      {savedInstances.length === 0
+        ? (
+        <p className='si-empty'>{translate('emptyState')}</p>
+          )
+        : (
+        <React.Fragment>
+          <div className='si-toolbar'>
+            <div className='si-field' css={css`margin-bottom:0;`}>
+              <Label for={searchInputId}>{translate('searchLabel')}</Label>
+              <TextInput
+                id={searchInputId}
+                value={search}
+                placeholder={translate('searchPlaceholder')}
+                onChange={(e) => { setSearch(e.target.value) }}
+              />
+            </div>
+            <div className='si-field' css={css`margin-bottom:0;`}>
+              <Label>{translate('sortLabel')}</Label>
+              <Select
+                size='sm'
+                aria-label={translate('sortLabel')}
+                value={sort}
+                onChange={(e) => { setSort(e.target.value as SortKey) }}
+              >
+                <Option value='date-desc'>{translate('sortNewest')}</Option>
+                <Option value='date-asc'>{translate('sortOldest')}</Option>
+                <Option value='name-asc'>{translate('sortNameAsc')}</Option>
+                <Option value='name-desc'>{translate('sortNameDesc')}</Option>
+              </Select>
+            </div>
+          </div>
+
+          {visibleInstances.length === 0
+            ? <p className='si-empty'>{translate('noMatches', { query: search.trim() })}</p>
+            : (
+            <table className='si-table'>
+              <caption className='si-sr-only'>{translate('tableCaption')}</caption>
+              <thead>
                 <tr>
-                  <td style={{ textAlign: 'center', backgroundColor: blue19Colors[1], color: 'white',  fontSize: '13px' }}>Name</td>
-                  <td colSpan={5} style={{ textAlign: 'center', backgroundColor: blue19Colors[1], color: 'white', fontSize: '13px' }}>Functions <button style={{marginLeft:"3px",color:"white",backgroundColor: 'transparent', cursor: 'pointer', borderRadius: '50%', border: '1px solid white'}} 
-                  onClick={() => setShowFunctionLegend(!showFunctionLegend)}>?</button></td>
+                  <th scope='col'>{translate('colName')}</th>
+                  <th scope='col'>{translate('colSaved')}</th>
+                  <th scope='col' colSpan={5}>
+                    {translate('colActions')}{' '}
+                    <Button
+                      type='tertiary'
+                      size='sm'
+                      icon
+                      aria-label={translate('showLegend')}
+                      aria-expanded={showLegend}
+                      onClick={() => { setShowLegend(!showLegend) }}
+                    >
+                      <CalciteIcon icon='question' scale='s' aria-hidden='true' />
+                    </Button>
+                  </th>
                 </tr>
-                {savedInstances.map((instance, index) => (
-                  <tr key={index} style={{background: index % 2 === 0 ? '#f2f2f2' : 'white'}}>
-                    <td style={{padding: '0px', border: '1px solid #ddd', fontSize: '13px',  textAlign: 'center', color:blue19Colors[0]}}>{instance.name}</td>
-                    <td style={{padding: '0px', textAlign: 'center', border: '1px solid #ddd', position: 'relative'}}>
-                      <button
-                      style={{
-                        color: 'black',
-                        border: 'none',
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        backgroundColor: 'transparent',
-                        position: 'relative',
-                        zIndex: 1
-                      }}
-                      onClick={() => {
-                        loadInstance(instance, index)}}
-                      title="Load instance to map"
-                      >
-                      {index === currentlyLoadingIndex ? <Loading type="PRIMARY" height={15} width={15} style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} /> : <calcite-icon icon="overwrite-features" scale="s"/>}
-                      </button>
+              </thead>
+              <tbody>
+                {visibleInstances.map((instance) => (
+                  <tr key={instance.name}>
+                    <th scope='row'>{instance.name}</th>
+                    <td>{formatDate(instance.createdAt)}</td>
+                    <td className='si-action-cell'>
+                      {iconBtn('overwrite-features', translate('loadAction', { name: instance.name }),
+                        () => { void loadInstance(instance) }, loadingName === instance.name)}
                     </td>
-                    <td style={{ border: '1px solid #ddd',textAlign: 'center'}}>
-                      <button
-                      style={{
-                        color: 'black',
-                        cursor: 'pointer',
-                        border: 'none',
-                        backgroundColor: 'transparent'
-                      }}
-                      onClick={() => editInstanceName(instance.name)}
-                      title="Edit instance name"
-                      ><calcite-icon icon="edit-attributes" scale="s"/></button>
+                    <td className='si-action-cell'>
+                      {iconBtn('edit-attributes', translate('renameAction', { name: instance.name }),
+                        () => { setModal({ kind: 'rename', name: instance.name, value: instance.name }) })}
                     </td>
-                    <td style={{border: '1px solid #ddd',  textAlign: 'center'}}>
-                      <button
-                      style={{
-                        color: 'black',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        backgroundColor: 'transparent'
-                      }}
-                      onClick={() => handleDownload(instance.name, false)}
-                      title="Download instance"
-                      ><calcite-icon icon="download" scale="s"/></button>
+                    <td className='si-action-cell'>
+                      {iconBtn('download', translate('downloadAction', { name: instance.name }),
+                        () => { handleDownload(instance.name, false) })}
                     </td>
-                    <td style={{ border: '1px solid #ddd',  textAlign: 'center'}}>
-                      <button
-                      style={{
-                        color: 'black',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        backgroundColor: 'transparent'
-                      }}
-                      onClick={() => removeInstanceGraphicsFromMap(instance.name)}
-                      title="Clear instance graphics from map"
-                      ><calcite-icon icon="x-circle" scale="s"/></button>
+                    <td className='si-action-cell'>
+                      {iconBtn('x-circle', translate('clearGraphicsAction', { name: instance.name }),
+                        () => { clearGraphics(instance.name) })}
                     </td>
-                    <td style={{ border: '1px solid #ddd',  textAlign: 'center'}}>
-                      <button
-                      style={{
-                        color: 'black',
-                        cursor: 'pointer',
-                        border: 'none',
-                        backgroundColor: 'transparent'
-                      }}
-                      onClick={() => removeInstance(instance.name)}
-                      title="Delete instance"
-                      ><calcite-icon icon="trash" scale="s"/></button>
+                    <td className='si-action-cell'>
+                      {iconBtn('trash', translate('deleteAction', { name: instance.name }),
+                        () => { setModal({ kind: 'delete', name: instance.name }) })}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-        )
-    }
-  }
+              )}
 
+          {/* Action legend */}
+          {showLegend && (
+            <table className='si-table si-legend' css={css`margin-top:0.5rem;`}>
+              <caption className='si-heading' css={css`text-align:left;`}>{translate('legendHeading')}</caption>
+              <thead>
+                <tr>
+                  <th scope='col'>{translate('legendIcon')}</th>
+                  <th scope='col'>{translate('legendAction')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><CalciteIcon icon='overwrite-features' scale='s' aria-hidden='true' /></td><td css={css`text-align:left;`}>{translate('loadAction', { name: '…' })}</td></tr>
+                <tr><td><CalciteIcon icon='edit-attributes' scale='s' aria-hidden='true' /></td><td css={css`text-align:left;`}>{translate('renameAction', { name: '…' })}</td></tr>
+                <tr><td><CalciteIcon icon='download' scale='s' aria-hidden='true' /></td><td css={css`text-align:left;`}>{translate('downloadAction', { name: '…' })}</td></tr>
+                <tr><td><CalciteIcon icon='x-circle' scale='s' aria-hidden='true' /></td><td css={css`text-align:left;`}>{translate('clearGraphicsAction', { name: '…' })}</td></tr>
+                <tr><td><CalciteIcon icon='trash' scale='s' aria-hidden='true' /></td><td css={css`text-align:left;`}>{translate('deleteAction', { name: '…' })}</td></tr>
+              </tbody>
+            </table>
+          )}
+        </React.Fragment>
+          )}
 
-
-  return (
-    <div className="widget-demo jimu-widget m-2 overflow-auto" style={{overflowY: 'scroll', scrollbarWidth: 'none'}}>
-              {/* Loading Overlay */}
-      {/** isLoading && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(128, 128, 128, 0.7)', // Grey overlay
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000,
-        }}>
-          <Loading />
-        </div>
-      )*/}
-        {props.hasOwnProperty("useMapWidgetIds") &&
-                    props.useMapWidgetIds &&
-                    props.useMapWidgetIds.length == 1 && (
-                      <JimuMapViewComponent
-                        useMapWidgetId={props.useMapWidgetIds?.[0]}
-                        onActiveViewChange={activeViewChangeHandler}
-                      />
-                    )}
-      <p style={{fontSize: '14px', color:blue19Colors[0]}}> <strong>Save your current map instance:</strong> </p>
-      <div style={{display: 'flex', alignItems: 'center', marginBottom: '5px'}}>
-        <label htmlFor="" style={{marginRight: '5px', fontSize: '13px', lineHeight: '1.5', color: blue19Colors[0]}} >Instance Name:</label>
-        <input type="text" onChange={(e) => setCurrentInstanceName(e.target.value)} style={{alignSelf: 'center', border: '1px solid', padding: '2px', borderColor: blue19Colors[3]}}/>
-      </div>
-            
-      <button style={{marginBottom: '15px', marginTop: '5px', background:(currentInstanceName.length > 0) ? blue19Colors[1]:'grey', color: 'white', padding: '4px 8px', border: 'none',cursor: 'pointer'}}
-      onClick={() => {getSettingsForCurrentMap()}}><strong>Save Instance</strong></button>
-      
-      <hr style={{borderColor: blue19Colors[3], marginRight: '15px'}}/>           
-
-      <p style={{marginTop: '20px', fontSize: '14px', color:blue19Colors[0]}}> <strong>Saved Instances:</strong></p>
-      
-      <div style={{display: showFunctionLegend ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center', width: '100%', marginBottom: '15px'}}>
-        <table style={{ backgroundColor: 'lightgrey', padding:"15px"}}>
-        <tr>
-            <td style={{ textAlign: 'center', backgroundColor: blue19Colors[2], color: 'white',  fontSize: '13px' }}>Symbol</td>
-            <td colSpan={5} style={{ textAlign: 'center', backgroundColor: blue19Colors[2], color: 'white', fontSize: '13px' }}>Function Description</td>
-            <td style={{textAlign: 'right', paddingRight: '5px', backgroundColor: 'red'}}>
-              <button style={{backgroundColor:'transparent',color: 'white', padding: '2px 5px', border: 'none', cursor: 'pointer'}}
-              title="Close"
-              onClick={() => setShowFunctionLegend(false)}
-              >X</button></td>
-          </tr>
-          <tr>
-            <td style={{textAlign: 'center'}}><calcite-icon icon="overwrite-features" scale="l"/></td>
-            <td> Load instance to map</td>
-          </tr>
-          <tr >
-            <td style={{textAlign: 'center'}}><calcite-icon icon="edit-attributes" scale="l"/></td>
-            <td> Edit instance name</td>
-          </tr>
-          <tr style={{padding:"5px"}}>
-            <td style={{textAlign: 'center'}}><calcite-icon icon="download" scale="l"/></td>
-            <td> Download instance</td>
-          </tr>
-          <tr style={{padding:"5px"}}>
-            <td style={{textAlign: 'center'}}><calcite-icon icon="x-circle" scale="l"/></td>
-            <td> Clear instance graphics from map</td>
-          </tr>
-          <tr style={{padding:"5px"}}>
-            <td style={{textAlign: 'center'}}> <calcite-icon icon="trash" scale="l"/></td>
-            <td> Delete instance</td>
-          </tr>
-        </table>
-      </div>
-
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-         {renderSavedInstances()}
-      </div> 
-
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10%', marginBottom: '15px', width: '100%'}}>
-        <button
-          style={{ marginRight: '10%', background:blue19Colors[1], color: 'white', padding: '4px 8px', border: 'none',cursor: 'pointer'}}
-          onClick={() => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.txt';
-            input.onchange = handleFileChange;
-            input.click();
-          }}
+      {/* Footer: import / export */}
+      <div className='si-footer'>
+        <Button
+          type='secondary'
+          size='sm'
+          onClick={() => { fileInputRef.current?.click() }}
         >
-          <strong>Upload Instances</strong>
-        </button>
-        <button 
-        style={{marginLeft: '10%', marginRight:"5%",background:(savedInstances.length > 0) ? blue19Colors[1]:'grey', color: 'white', padding: '4px 8px', border: 'none',cursor: 'pointer'}}
-        onClick={() => {handleDownload('allInstances', true)}}><strong>Download Instances</strong></button>
+          {translate('uploadInstances')}
+        </Button>
+        <Button
+          type='secondary'
+          size='sm'
+          disabled={savedInstances.length === 0}
+          onClick={() => { handleDownload('all', true) }}
+        >
+          {translate('downloadInstances')}
+        </Button>
       </div>
+      <input
+        ref={fileInputRef}
+        type='file'
+        accept='.txt,text/plain'
+        className='si-sr-only'
+        aria-label={translate('uploadInstances')}
+        onChange={handleFileChange}
+      />
+
+      {/* Rename modal */}
+      <Modal isOpen={modal?.kind === 'rename'} toggle={() => { setModal(null) }} onClosed={() => { setModal(null) }} aria-labelledby='si-rename-title'>
+        {modal?.kind === 'rename' && (
+          <React.Fragment>
+            <ModalHeader id='si-rename-title' toggle={() => { setModal(null) }}>{translate('renameTitle')}</ModalHeader>
+            <ModalBody>
+              <Label for='si-rename-input'>{translate('renameLabel', { name: modal.name })}</Label>
+              <TextInput
+                id='si-rename-input'
+                css={css`width:100%;`}
+                value={modal.value}
+                onChange={(e) => { setModal({ ...modal, value: e.target.value }) }}
+                onAcceptValue={() => { commitRename(modal.name, modal.value) }}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button type='tertiary' onClick={() => { setModal(null) }}>{translate('cancel')}</Button>
+              <Button type='primary' disabled={!modal.value.trim()} onClick={() => { commitRename(modal.name, modal.value) }}>{translate('rename')}</Button>
+            </ModalFooter>
+          </React.Fragment>
+        )}
+      </Modal>
+
+      {/* Delete modal */}
+      <Modal isOpen={modal?.kind === 'delete'} toggle={() => { setModal(null) }} onClosed={() => { setModal(null) }} aria-labelledby='si-delete-title'>
+        {modal?.kind === 'delete' && (
+          <React.Fragment>
+            <ModalHeader id='si-delete-title' toggle={() => { setModal(null) }}>{translate('deleteTitle')}</ModalHeader>
+            <ModalBody>{translate('deleteConfirm', { name: modal.name })}</ModalBody>
+            <ModalFooter>
+              <Button type='tertiary' onClick={() => { setModal(null) }}>{translate('cancel')}</Button>
+              <Button type='danger' onClick={() => { commitDelete(modal.name) }}>{translate('delete')}</Button>
+            </ModalFooter>
+          </React.Fragment>
+        )}
+      </Modal>
+
+      {/* Replace-on-import modal */}
+      <Modal isOpen={modal?.kind === 'replace'} toggle={() => { setModal(null) }} onClosed={() => { setModal(null) }} aria-labelledby='si-replace-title'>
+        {modal?.kind === 'replace' && (
+          <React.Fragment>
+            <ModalHeader id='si-replace-title' toggle={() => { setModal(null) }}>{translate('replaceTitle')}</ModalHeader>
+            <ModalBody>{translate('replaceConfirm', { name: modal.dupes.join('”, “') })}</ModalBody>
+            <ModalFooter>
+              <Button type='tertiary' onClick={() => { applyImport(modal.incoming, false) }}>{translate('keepExisting')}</Button>
+              <Button type='primary' onClick={() => { applyImport(modal.incoming, true) }}>{translate('replace')}</Button>
+            </ModalFooter>
+          </React.Fragment>
+        )}
+      </Modal>
     </div>
   )
 }
 
 export default Widget
-
-

@@ -1,0 +1,31 @@
+{
+  "name": "save-instance",
+  "version": "2.0.0",
+  "description": "Save, load and share map state (viewpoint, layers, filters, basemap, time, graphics) in ArcGIS Experience Builder, stored locally in the browser. Accessibility rebuild (WCAG 2.1 AA) of Sven Jensen's Save Instance widget.",
+  "keywords": [
+    "exb-widget",
+    "experience-builder",
+    "exb",
+    "arcgis",
+    "map",
+    "save",
+    "instance",
+    "session",
+    "bookmark",
+    "accessibility",
+    "wcag"
+  ],
+  "license": "MIT",
+  "author": "Sven Jensen (https://jensengis.com)",
+  "contributors": [
+    "Brian McLeer (City of Grand Junction, CO)"
+  ],
+  "homepage": "https://github.com/svenweb/saveInstanceWidget",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brianmcleer/save-instance-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brianmcleer/save-instance-widget/issues"
+  }
+}
