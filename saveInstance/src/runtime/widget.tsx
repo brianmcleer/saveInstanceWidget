@@ -23,12 +23,21 @@ import {
   Select,
   Option
 } from 'jimu-ui'
-import Extent from '@arcgis/core/geometry/Extent.js'
-import Viewpoint from '@arcgis/core/Viewpoint.js'
-import Graphic from '@arcgis/core/Graphic.js'
-import Basemap from '@arcgis/core/Basemap.js'
-import TimeExtent from '@arcgis/core/time/TimeExtent.js'
-import Collection from '@arcgis/core/core/Collection.js'
+import { CalciteIcon } from 'calcite-components'
+// Import the Maps SDK through Experience Builder's `esri/*` alias, never
+// `@arcgis/core/*`. EB's webpack maps `esri/` to `@arcgis/core` at build time so
+// the runtime is identical, but `@arcgis/core` is a real installed package and
+// Visual Studio reads it through the pnpm junction (IDE1100 / TS2306).
+// See WIDGETHANDOFF Section 12, item 3.
+import Extent from 'esri/geometry/Extent'
+import Viewpoint from 'esri/Viewpoint'
+import Graphic from 'esri/Graphic'
+import Basemap from 'esri/Basemap'
+import TimeExtent from 'esri/time/TimeExtent'
+import Collection from 'esri/core/Collection'
+import HelpPopup from './components/HelpPopup'
+import { buildHelpSections, type HelpFeatures } from './helpSections'
+import { useTokens } from './theme'
 import defaultMessages from './translations/default'
 
 /**
@@ -43,9 +52,8 @@ const STORAGE_KEY = 'saveInstanceWidgetInstances'
 const SCHEMA_VERSION = 2
 const DRAW_GROUP_LAYER_ID = 'jimu-draw'
 
-// Calcite web component, registered globally by Experience Builder. Typed as a
-// dynamic tag so it is valid JSX under the emotion (jimu-core) jsx pragma.
-const CalciteIcon: any = 'calcite-icon'
+/** Per-browser, per-widget key for the first-run hint dismissal (Section 10.5). */
+const hintKey = (widgetId: string): string => `saveInstance.helpHintDismissed.${widgetId}`
 
 type SortKey = 'name-asc' | 'name-desc' | 'date-desc' | 'date-asc'
 type StatusKind = 'success' | 'warning' | 'error'
@@ -132,6 +140,35 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   const [showLegend, setShowLegend] = React.useState(false)
   const [status, setStatus] = React.useState<StatusMessage>(null)
   const [modal, setModal] = React.useState<ActiveModal>(null)
+  const [helpOpen, setHelpOpen] = React.useState(false)
+
+  const tokens = useTokens()
+
+  // ---------------------------------------------------------------------
+  // Help guide (WIDGETHANDOFF Section 10)
+  // ---------------------------------------------------------------------
+  // The hint shows until it is dismissed once. Private browsing throws on both
+  // the read and the write, and the guide is not worth breaking a widget over.
+  const [showFirstRunHint, setShowFirstRunHint] = React.useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem(hintKey(props.id)) !== '1'
+    } catch (e) {
+      return true
+    }
+  })
+
+  const dismissHint = React.useCallback(() => {
+    setShowFirstRunHint(false)
+    try {
+      window.localStorage.setItem(hintKey(props.id), '1')
+    } catch (e) { /* private browsing; the hint simply returns next time */ }
+  }, [props.id])
+
+  // Opening the guide counts as answering the hint.
+  const openHelp = React.useCallback(() => {
+    setHelpOpen(true)
+    dismissHint()
+  }, [dismissHint])
 
   const statusTimer = React.useRef<number | null>(null)
   const defaultLoadedRef = React.useRef(false)
@@ -583,6 +620,8 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
     h3.si-heading { font-size: 0.95rem; margin: 0.25rem 0 0.5rem; }
+    .si-header { display: flex; align-items: center; gap: 0.25rem; }
+    .si-header h3.si-heading { flex: 1 1 auto; min-width: 0; }
     .si-field { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.5rem; }
     .si-hint { font-size: 0.75rem; opacity: 0.75; }
     .si-toolbar { display: flex; gap: 0.5rem; align-items: flex-end; margin: 0.5rem 0; flex-wrap: wrap; }
@@ -637,6 +676,21 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   // ---------------------------------------------------------------------
   const hasMap = props.useMapWidgetIds && props.useMapWidgetIds.length === 1
 
+  // Computed from the same config checks the rest of the widget uses, so the
+  // guide never describes a control this app is not showing (Section 12, item 7).
+  const helpFeatures: HelpFeatures = {
+    viewpoint: !!config.captureViewpoint,
+    layers: !!config.captureLayers,
+    filters: !!config.captureFilters,
+    basemap: !!config.captureBasemap,
+    time: !!config.captureTime,
+    graphics: !!config.captureGraphics,
+    limited: config.maxInstances > 0,
+    maxInstances: config.maxInstances,
+    autoLoad: !!config.defaultInstanceName,
+    defaultInstanceName: config.defaultInstanceName ?? ''
+  }
+
   return (
     <div className='jimu-widget' css={styles} role='region' aria-label={translate('_widgetLabel')}>
       {hasMap && (
@@ -659,7 +713,37 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
       )}
 
       {/* Save */}
-      <h3 className='si-heading'>{translate('saveHeading')}</h3>
+      <div className='si-header'>
+        <h3 className='si-heading'>{translate('saveHeading')}</h3>
+        <Button
+          size='sm'
+          type='tertiary'
+          icon
+          onClick={openHelp}
+          title={translate('helpTitle')}
+          aria-label={translate('helpTitle')}
+          style={{ flexShrink: 0 }}
+        >
+          <CalciteIcon icon='question' scale='s' />
+        </Button>
+      </div>
+
+      {/* First-run hint: shows until dismissed once, per browser and widget */}
+      {showFirstRunHint && (
+        <div role='note' style={{ margin: '0 0 10px 0', padding: '10px 12px', display: 'flex', alignItems: 'flex-start', gap: '10px', background: tokens.infoBg, color: tokens.text, border: `1px solid ${tokens.divider}`, borderLeft: `3px solid ${tokens.primary}`, borderRadius: tokens.radius, fontSize: '12px', lineHeight: 1.5 }}>
+          <span style={{ color: tokens.primary, marginTop: '1px' }} aria-hidden='true'><CalciteIcon icon='lightbulb' scale='s' /></span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <strong style={{ display: 'block', marginBottom: '2px' }}>{translate('firstRunTitle')}</strong>
+            {translate('firstRunBody')}
+            {' '}
+            <button type='button' onClick={openHelp} style={{ border: 'none', background: 'transparent', padding: 0, color: tokens.primary, cursor: 'pointer', textDecoration: 'underline', font: 'inherit' }}>{translate('firstRunHelpLink')}</button>
+          </span>
+          <Button size='sm' type='tertiary' icon onClick={dismissHint} title={translate('firstRunDismiss')} aria-label={translate('firstRunDismiss')}>
+            <CalciteIcon icon='x' scale='s' />
+          </Button>
+        </div>
+      )}
+
       <div className='si-field'>
         <Label for={nameInputId}>{translate('instanceNameLabel')}</Label>
         <TextInput
@@ -736,7 +820,8 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
                       aria-expanded={showLegend}
                       onClick={() => { setShowLegend(!showLegend) }}
                     >
-                      <CalciteIcon icon='question' scale='s' aria-hidden='true' />
+                      {/* Not 'question': that icon means Help everywhere in the widget family. */}
+                      <CalciteIcon icon='list' scale='s' aria-hidden='true' />
                     </Button>
                   </th>
                 </tr>
@@ -871,6 +956,19 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
           </React.Fragment>
         )}
       </Modal>
+
+      {/* Help guide (WIDGETHANDOFF Section 10). Presentation is the shared
+          HelpPopup; only helpSections.ts and the help* strings are ours. */}
+      <HelpPopup
+        open={helpOpen}
+        onClose={() => { setHelpOpen(false) }}
+        sections={buildHelpSections(translate, helpFeatures)}
+        title={translate('helpTitle')}
+        intro={translate('helpIntro')}
+        searchPlaceholder={translate('helpSearchPlaceholder')}
+        noMatches={translate('helpNoMatches')}
+        closeLabel={translate('close')}
+      />
     </div>
   )
 }

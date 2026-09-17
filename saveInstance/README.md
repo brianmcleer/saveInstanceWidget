@@ -24,12 +24,16 @@ for the full list and `LICENSE` for terms.
 - Rename, delete, and clear-graphics actions per instance.
 - Filter and sort the saved list; optional startup instance.
 - Download a single instance or all instances; import from `.txt`.
+- Built-in **Help** guide: a question button at the top right opens a short,
+  searchable, plain-language guide that adapts to the options you have enabled.
+  A one-time hint points new users at it.
 - WCAG 2.1 AA: themed (light and dark), keyboard operable, screen-reader labeled,
   accessible dialogs and status messages. See `CHANGES.md`.
 
 ## Requirements
 
-- ArcGIS Experience Builder Developer Edition 1.19 or 1.20 (React 19).
+- ArcGIS Experience Builder Developer Edition 1.19 through 1.21 (React 19).
+  Built and tested on 1.21.
 - EB 1.18 and earlier (React 18) are not supported.
 
 ## Install
@@ -40,11 +44,12 @@ for the full list and `LICENSE` for terms.
    Do not nest it a second level deep (for example
    `widgets/saveInstance/saveInstance/`). Nesting is the most common reason a
    widget does not register.
-2. From the `client` folder, run `npm install`. Experience Builder installs this
+2. From the `client` folder, run `npm install` (Experience Builder 1.20 and
+   earlier) or `pnpm install` (1.21 and later). Experience Builder installs this
    widget's dependencies automatically from its `package.json`, so there are no
    per-dependency commands to run.
-3. Restart the EB client (`npm start`), then add the widget in the builder and
-   select a map in the widget settings.
+3. Restart the EB client (`npm start`, or `pnpm start` on 1.21 and later), then
+   add the widget in the builder and select a map in the widget settings.
 
 ### The release zip and the editor shims
 

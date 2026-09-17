@@ -1,4 +1,9 @@
-import { type ImmutableObject } from 'seamless-immutable'
+// Imported from jimu-core, not 'seamless-immutable': the latter resolves to the
+// real @types/seamless-immutable through the EB 1.21 pnpm junction, which
+// Visual Studio cannot read (IDE1100 / TS2614). jimu-core re-exports the same
+// type and has no resolvable package under the widget folder, so the editor
+// shim answers it. See WIDGETHANDOFF Section 12, item 3.
+import { type ImmutableObject } from 'jimu-core'
 
 export interface Config {
   /** Save the current viewpoint (center, scale, rotation, and 3D camera). */

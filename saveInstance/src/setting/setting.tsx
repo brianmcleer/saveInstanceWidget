@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { React, jsx, css, hooks } from 'jimu-core'
-import { type AllWidgetSettingProps } from 'jimu-for-builder'
 import {
   MapWidgetSelector,
   SettingRow,
@@ -10,7 +9,25 @@ import { Switch, NumericInput, TextInput } from 'jimu-ui'
 import { type IMConfig } from '../config'
 import defaultMessages from './translations/default'
 
-function Setting (props: AllWidgetSettingProps<IMConfig>): React.ReactElement {
+/**
+ * Local structural stand-in for `AllWidgetSettingProps` from 'jimu-for-builder'.
+ * The shared editor shim declares that module in shorthand form, and a shorthand
+ * module cannot be used as a type (TS2709). The shim is byte-locked, so the fix
+ * is local. See WIDGETHANDOFF Section 12, item 3.
+ */
+interface SettingProps {
+  id: string
+  config: IMConfig
+  onSettingChange: (settings: any, ...rest: any[]) => void
+  useDataSources?: any
+  useMapWidgetIds?: any
+  intl?: any
+  theme?: any
+  portalUrl?: string
+  [key: string]: any
+}
+
+function Setting (props: SettingProps): React.ReactElement {
   const translate = hooks.useTranslation(defaultMessages)
   const { config, id, onSettingChange } = props
 
