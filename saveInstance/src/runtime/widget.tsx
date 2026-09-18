@@ -726,21 +726,23 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
       {/* Save */}
       <div className='si-header'>
         <h3 className='si-heading'>{translate('saveHeading')}</h3>
-        <Button
-          size='sm'
-          type='tertiary'
-          icon
-          onClick={openHelp}
-          title={translate('helpTitle')}
-          aria-label={translate('helpTitle')}
-          style={{ flexShrink: 0 }}
-        >
-          <CalciteIcon icon='question' scale='s' />
-        </Button>
+        {props.config?.showHelp !== false && (
+            <Button
+              size='sm'
+              type='tertiary'
+              icon
+              onClick={openHelp}
+              title={translate('helpTitle')}
+              aria-label={translate('helpTitle')}
+              style={{ flexShrink: 0 }}
+            >
+              <CalciteIcon icon='question' scale='s' />
+            </Button>
+        )}
       </div>
 
       {/* First-run hint: shows until dismissed once, per browser and widget */}
-      {showFirstRunHint && (
+      {props.config?.showHelp !== false && showFirstRunHint && (
         <div role='note' style={{ margin: '0 0 10px 0', padding: '10px 12px', display: 'flex', alignItems: 'flex-start', gap: '10px', background: tokens.infoBg, color: tokens.text, border: `1px solid ${tokens.divider}`, borderLeft: `3px solid ${tokens.primary}`, borderRadius: tokens.radius, fontSize: '12px', lineHeight: 1.5 }}>
           <span style={{ color: tokens.primary, marginTop: '1px' }} aria-hidden='true'><CalciteIcon icon='lightbulb' scale='s' /></span>
           <span style={{ flex: 1, minWidth: 0 }}>

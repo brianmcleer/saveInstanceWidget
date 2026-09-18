@@ -1,5 +1,7 @@
 # Save Instance (accessible build)
 
+[![License](https://img.shields.io/github/license/brianmcleer/saveInstanceWidget)](LICENSE) [![Release](https://img.shields.io/github/v/release/brianmcleer/=tag)](https://github.com/brianmcleer/saveInstanceWidget/releases) [![Issues](https://img.shields.io/github/issues/brianmcleer/saveInstanceWidget)](https://github.com/brianmcleer/saveInstanceWidget/issues)
+
 Save, load and share the current state of an ArcGIS Experience Builder web map:
 viewpoint (center, scale, rotation and 3D camera), layer visibility and opacity,
 feature-layer definition expressions and labels, basemap, time extent, and

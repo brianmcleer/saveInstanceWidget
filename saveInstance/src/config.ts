@@ -6,6 +6,9 @@
 import { type ImmutableObject } from 'jimu-core'
 
 export interface Config {
+  /** Show the question-mark button that opens the help guide. Undefined means on,
+   *  so apps configured before this setting existed keep their help button. */
+  showHelp?: boolean
   /** Save the current viewpoint (center, scale, rotation, and 3D camera). */
   captureViewpoint: boolean
   /** Save each layer's visibility and opacity. */
