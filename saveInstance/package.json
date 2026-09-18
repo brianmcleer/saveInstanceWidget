@@ -1,6 +1,6 @@
 {
   "name": "save-instance",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Save, load and share map state (viewpoint, layers, filters, basemap, time, graphics) in ArcGIS Experience Builder, stored locally in the browser. Accessibility rebuild (WCAG 2.1 AA) of Sven Jensen's Save Instance widget.",
   "keywords": [
     "exb-widget",

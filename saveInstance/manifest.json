@@ -2,7 +2,7 @@
   "name": "saveInstance",
   "label": "Save Instance",
   "type": "widget",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "exbVersion": "1.21.0",
   "author": "Sven Jensen (jensengis.com); accessibility and feature updates by Brian McLeer, City of Grand Junction, CO",
   "description": "Save, load and share the state of your map, extent/viewpoint, layer visibility & opacity, definition expressions, basemap, time and graphics, stored locally in the browser. Rebuilt for accessibility (WCAG 2.1 AA).",

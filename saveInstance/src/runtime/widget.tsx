@@ -39,6 +39,8 @@ import HelpPopup from './components/HelpPopup'
 import { buildHelpSections, type HelpFeatures } from './helpSections'
 import { useTokens } from './theme'
 import defaultMessages from './translations/default'
+import { beacon } from '../shared/beacon'
+import type { BeaconHandle } from '../shared/beacon'
 
 /**
  * Save Instance, rebuilt for accessibility (WCAG 2.1 AA) and a wider set of
@@ -130,6 +132,9 @@ function migrateInstance (raw: any): any {
 const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   const translate = hooks.useTranslation(defaultMessages)
   const config = props.config
+
+  const beaconRef = React.useRef<BeaconHandle | null>(null)
+  React.useEffect(() => { beaconRef.current = beacon.init(props) }, [])
 
   const [jimuMapView, setJimuMapView] = React.useState<JimuMapView>(null)
   const [savedInstances, setSavedInstances] = React.useState<any[]>([])
@@ -350,6 +355,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   }
 
   const handleSave = (): void => {
+    beaconRef.current?.action('save')
     if (!jimuMapView) { announce('error', translate('errNoMap')); return }
     const name = nameInput.trim()
     if (!name) { announce('error', translate('errNoName')); return }
@@ -426,6 +432,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   }
 
   const loadInstance = async (instance: any): Promise<void> => {
+    beaconRef.current?.action('load')
     if (!jimuMapView) { announce('error', translate('errNoMap')); return }
     setLoadingName(instance.name)
     const view = jimuMapView.view
@@ -459,6 +466,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
         }
       }
     } catch (e: any) {
+      beaconRef.current?.error(e, 'load')
       // goTo rejects when interrupted by another navigation, that is benign
       if (e?.name !== 'AbortError') {
         hadIssue = true
@@ -525,6 +533,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
     Array.isArray(data) && data.every(d => d && typeof d === 'object' && typeof d.name === 'string')
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    beaconRef.current?.action('import')
     const file = event.target.files?.[0]
     if (event.target) event.target.value = ''
     if (!file || !(file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt'))) {
@@ -539,6 +548,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
       try {
         parsed = JSON.parse(fromBase64(text))
       } catch (err) {
+        beaconRef.current?.error(err, 'import')
         announce('error', translate('errInvalidContent'))
         return
       }
@@ -571,6 +581,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   }
 
   const handleDownload = (name: string, all: boolean): void => {
+    beaconRef.current?.action('export')
     if (savedInstances.length === 0) { announce('error', translate('errNothingToDownload')); return }
     const toDownload = all ? savedInstances : [savedInstances.find(i => i.name === name)]
     const encoded = toBase64(JSON.stringify(toDownload))
