@@ -1,0 +1,11 @@
+node_modules/
+.vs/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+CHANGES.md
+
+# Cowork working folder and release zips never ship
+Claude outputs/
+*.zip

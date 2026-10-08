@@ -1,7 +1,5 @@
 # Save Instance (accessible build)
 
-[![License](https://img.shields.io/github/license/brianmcleer/saveInstanceWidget)](LICENSE) [![Release](https://img.shields.io/github/v/release/brianmcleer/saveInstanceWidget?display_name=tag)](https://github.com/brianmcleer/saveInstanceWidget/releases) [![Issues](https://img.shields.io/github/issues/brianmcleer/saveInstanceWidget)](https://github.com/brianmcleer/saveInstanceWidget/issues)
-
 Save, load and share the current state of an ArcGIS Experience Builder web map:
 viewpoint (center, scale, rotation and 3D camera), layer visibility and opacity,
 feature-layer definition expressions and labels, basemap, time extent, and
@@ -26,12 +24,16 @@ for the full list and `LICENSE` for terms.
 - Rename, delete, and clear-graphics actions per instance.
 - Filter and sort the saved list; optional startup instance.
 - Download a single instance or all instances; import from `.txt`.
+- Built-in **Help** guide: a question button at the top right opens a short,
+  searchable, plain-language guide that adapts to the options you have enabled.
+  A one-time hint points new users at it.
 - WCAG 2.1 AA: themed (light and dark), keyboard operable, screen-reader labeled,
   accessible dialogs and status messages. See `CHANGES.md`.
 
 ## Requirements
 
-- ArcGIS Experience Builder Developer Edition 1.19 or 1.20 (React 19).
+- ArcGIS Experience Builder Developer Edition 1.19 through 1.21 (React 19).
+  Built and tested on 1.21.
 - EB 1.18 and earlier (React 18) are not supported.
 
 ## Install
@@ -42,17 +44,22 @@ for the full list and `LICENSE` for terms.
    Do not nest it a second level deep (for example
    `widgets/saveInstance/saveInstance/`). Nesting is the most common reason a
    widget does not register.
-2. From the `client` folder, run `npm install`. Experience Builder installs this
+2. From the `client` folder, run `npm install` (Experience Builder 1.20 and
+   earlier) or `pnpm install` (1.21 and later). Experience Builder installs this
    widget's dependencies automatically from its `package.json`, so there are no
    per-dependency commands to run.
-3. Restart the EB client (`npm start`), then add the widget in the builder and
-   select a map in the widget settings.
+3. Restart the EB client (`npm start`, or `pnpm start` on 1.21 and later), then
+   add the widget in the builder and select a map in the widget settings.
 
 ### The release zip and the editor shims
 
 The zip is the widget only. The Visual Studio type shims in the repo (`saveInstance/src/exb-editor-shims.d.ts`, `saveInstance/src/vendor-shims.d.ts`) are left out on purpose: their ambient `declare module` blocks are not file-scoped and would rewrite the react, jimu and esri types for every other widget in your `your-extensions` folder.
 
 If you clone the repository instead of using the zip, delete `saveInstance/src/exb-editor-shims.d.ts` and the other shim files listed above before building; nothing else depends on them.
+
+## Usage telemetry
+
+This widget records anonymous usage counts and errors so the GIS Division can see which widgets and versions are in use and which errors users hit. It records the app id and title, widget name and version, the action name, a truncated error message, the site host name and browser family. It never records usernames, coordinates, addresses, attribute values or URLs with query strings. Where the data goes: on page load the widget asks the app's portal for a public item tagged `exb-beacon-sink` and posts to that table. If your portal has no such item, nothing is sent anywhere. To turn it off for an app, set `"telemetry": false` in the widget's config, or users can enable Do Not Track in their browser. The shared module is `src/shared/beacon.ts`.
 
 ## Troubleshooting: "saveInstance is duplicated"
 
@@ -72,17 +79,6 @@ so `manifest.json` sits directly inside the widget folder.
 - The original widget, its roadmap, and the author's other tools:
   https://github.com/svenweb/saveInstanceWidget and
   https://community.esri.com/t5/arcgis-experience-builder-ideas/save-instance-widget/idi-p/1610260
-
-<!-- exb-i18n:languages -->
-## Languages
-
-The widget follows the Experience Builder app language: the ArcGIS profile language, the browser, `?locale=xx` in the URL, or the Language Switcher widget. Interface text lives in `src/runtime/translations/default.ts` (and `src/setting/translations/default.ts` for the settings panel), with language files for all 39 Experience Builder locales made by [exb-i18n-kit](https://github.com/brianmcleer/exb-i18n-kit).
-
-- Esri's own Experience Builder translations are used first, so shared words match the out-of-the-box widgets.
-- Other strings come from the kit's shared translation memory. Machine translations are marked for review.
-- Anything not translated yet shows in English.
-- Coverage per language: `saveInstance/i18n/STATUS.md`.
-- To fix a translation for every widget that uses it, open a pull request on `memory/<locale>.json` in exb-i18n-kit.
 
 ## License
 
