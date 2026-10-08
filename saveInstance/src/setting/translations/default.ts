@@ -15,5 +15,8 @@ export default {
   maxInstancesHint: 'Set to 0 for no limit.',
   defaultInstance: 'Load this instance on startup',
   defaultInstanceHint: 'Type the exact name of a saved instance, or leave blank.',
-  defaultInstanceNone: 'None'
+  defaultInstanceNone: 'None',
+  help: 'Help',
+  showHelpGuide: 'Show help guide',
+  showTheQuestionMarkButtonThat: 'Show the question-mark button that opens the widget help guide'
 }

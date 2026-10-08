@@ -105,12 +105,12 @@ function Setting (props: SettingProps): React.ReactElement {
           <span css={hint}>{translate('defaultInstanceHint')}</span>
         </SettingRow>
       </SettingSection>
-      <SettingSection title='Help'>
-        <SettingRow tag='label' label='Show help guide'>
+      <SettingSection title={translate('help')}>
+        <SettingRow tag='label' label={translate('showHelpGuide')}>
           <Switch
             checked={props.config?.showHelp !== false}
             onChange={(evt) => { props.onSettingChange({ id: (props as any).id, config: (props.config as any).set('showHelp', evt.target.checked) }) }}
-            aria-label='Show the question-mark button that opens the widget help guide'
+            aria-label={translate('showTheQuestionMarkButtonThat')}
           />
         </SettingRow>
       </SettingSection>
