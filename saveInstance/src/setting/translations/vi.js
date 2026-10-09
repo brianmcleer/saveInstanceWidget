@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Không có",
         help: "Trợ giúp",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Hiện hướng dẫn trợ giúp",
+        showTheQuestionMarkButtonThat: "Hiển thị nút đánh dấu câu hỏi để mở hướng dẫn trợ giúp ô điều khiển"
       })
     }
   }

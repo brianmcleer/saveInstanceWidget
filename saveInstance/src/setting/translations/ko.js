@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "없음",
         help: "도움말",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "공지사항",
+        showTheQuestionMarkButtonThat: "위젯 도움말 가이드를 열 수있는 질문 표시 버튼"
       })
     }
   }

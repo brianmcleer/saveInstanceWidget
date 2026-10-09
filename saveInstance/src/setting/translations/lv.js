@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Neviens",
         help: "Palīdzība",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Rādīt palīdzības ceļvedi",
+        showTheQuestionMarkButtonThat: "Rādīt jautājumu zīmes pogu, kas atver logdaļu palīdzības rokasgrāmatu"
       })
     }
   }

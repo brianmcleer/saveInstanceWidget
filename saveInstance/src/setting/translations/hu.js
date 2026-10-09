@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Egyik sem",
         help: "Súgó",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Segítőútmutató megjelenítése",
+        showTheQuestionMarkButtonThat: "Megjeleníti a kérdőjel gombot, amely megnyitja a widget súgó útmutatót"
       })
     }
   }

@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Puudub",
         help: "Abi",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Abijuhendi näitamine",
+        showTheQuestionMarkButtonThat: "Küsimusemärgi nupu näitamine, mis avab vidina abi juhendi"
       })
     }
   }
