@@ -41,7 +41,7 @@ import { useTokens } from './theme'
 import defaultMessages from './translations/default'
 import { beacon } from '../shared/beacon'
 import type { BeaconHandle } from '../shared/beacon'
-import { __setIntl } from './i18n-t'
+import { __locale, __setIntl } from './i18n-t'
 
 /**
  * Save Instance, rebuilt for accessibility (WCAG 2.1 AA) and a wider set of
@@ -619,7 +619,7 @@ const Widget = (props: AllWidgetProps<IMConfig>): React.ReactElement => {
   const formatDate = (iso: string): string => {
     if (!iso) return ''
     const d = new Date(iso)
-    return isNaN(d.getTime()) ? '' : d.toLocaleDateString()
+    return isNaN(d.getTime()) ? '' : d.toLocaleDateString(__locale())
   }
 
   // ---------------------------------------------------------------------
