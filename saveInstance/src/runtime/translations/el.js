@@ -72,10 +72,10 @@ System.register([], function (e) {
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "Τίποτα στον οδηγό δεν ταιριάζει με αυτή τη λέξη. Δοκιμάστε ένα άλλο, ή ανοίξτε τα τμήματα παραπάνω.",
         helpAnd: "και",
-        firstRunTitle: "New here?",
+        firstRunTitle: "Καινούριο εδώ;",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "Άνοιξε τον οδηγό.",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "Ελεύθεροι",
         helpStartTitle: "Εκκίνηση εδώ: τρία βήματα",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -129,10 +129,12 @@ System.register([], function (e) {
         helpTroubleUpload: "Upload instances will not take the file: only a .txt file downloaded from this widget works. Do not rename or edit that file.",
         helpTroubleGone: "The list is empty and it was not before: browsing data was cleared, or this is a different browser or computer.",
         helpTroubleContact: "Still stuck? Contact the GIS Division and mention the Save Instance name and this app.",
-        helpTipsTitle: "Χαίρομαι που το μαθαίνω.",
+        helpTipsTitle: "Χαίρομαι που το μαθαίνω",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

@@ -67,15 +67,15 @@ System.register([], function (e) {
         errNothingToDownload: "There are no saved instances to download.",
         errWrongMap: "This instance was saved from a different map. Some settings may not apply.",
         errLoadFailed: "The instance could not be fully loaded.",
-        helpTitle: "Help",
+        helpTitle: "Hulp",
         helpIntro: "Set the map up the way you need it, save it under a name, and bring it back with one click whenever you want it again.",
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "Niets in de gids komt overeen met dat woord. Probeer een andere, of open de bovenstaande secties.",
         helpAnd: "en",
-        firstRunTitle: "New here?",
+        firstRunTitle: "Nieuw hier?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "Open de gids.",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "Ingetrokken",
         helpStartTitle: "Begin hier: drie stappen",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -120,7 +120,7 @@ System.register([], function (e) {
         helpKeep1: "Saved views are kept in this browser, on this computer. Nobody else can see them.",
         helpKeep2: "A different browser, a different computer or a private window shows an empty list.",
         helpKeep3: "Clearing your browsing history or site data deletes them. Choose Download all first if you want a copy.",
-        helpTroubleTitle: "Als er iets mis lijkt.",
+        helpTroubleTitle: "Als er iets mis lijkt",
         helpTroubleSave: "Save instance stays greyed out: the name box is empty, or this widget is not connected to a map. Type a name, and tell the GIS Division if it is still greyed out.",
         helpTroubleDuplicate: "It says the name already exists: another saved view has that name. Pick a different name, or rename the old one first.",
         helpTroubleNoChange: "Loading seems to change nothing: the view was saved on a different map, or those layers are no longer in this app. A warning appears when the map does not match.",
@@ -132,7 +132,9 @@ System.register([], function (e) {
         helpTipsTitle: "Goed om te weten",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

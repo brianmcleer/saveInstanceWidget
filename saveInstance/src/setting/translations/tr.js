@@ -20,7 +20,7 @@ System.register([], function (e) {
         defaultInstanceNone: "Hiçbiri",
         help: "Yardım",
         showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "widget'ı açan soru işaret düğmesine göster"
+        showTheQuestionMarkButtonThat: "Widget'ı açan soru işaret düğmesine göster"
       })
     }
   }

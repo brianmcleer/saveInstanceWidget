@@ -18,7 +18,7 @@ System.register([], function (e) {
         defaultInstance: "Load this instance on startup",
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Geen",
-        help: "Help",
+        help: "Hulp",
         showHelpGuide: "Hulplijn tonen",
         showTheQuestionMarkButtonThat: "De knop met het vraagteken tonen die de hulplijn widget opent"
       })

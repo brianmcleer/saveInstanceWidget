@@ -71,11 +71,11 @@ System.register([], function (e) {
         helpIntro: "Set the map up the way you need it, save it under a name, and bring it back with one click whenever you want it again.",
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "ガイドがその単語と一致するわけではありません。 別のセクションを試し、または上記のセクションを開きます。",
-        helpAnd: "and",
-        firstRunTitle: "New here?",
+        helpAnd: "および",
+        firstRunTitle: "詳しくはこちら",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "ガイドを開きます。",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "免責事項",
         helpStartTitle: "ここから: 3 つのステップ",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -132,7 +132,9 @@ System.register([], function (e) {
         helpTipsTitle: "よく知る",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

@@ -19,8 +19,8 @@ System.register([], function (e) {
         defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
         defaultInstanceNone: "Nenhum",
         help: "Ajuda",
-        showHelpGuide: "Mostre guia de ajuda.",
-        showTheQuestionMarkButtonThat: "Mostre o botão de ponto de interrogação que abre o guia de ajuda do widget."
+        showHelpGuide: "Mostre guia de ajuda",
+        showTheQuestionMarkButtonThat: "Mostre o botão de ponto de interrogação que abre o guia de ajuda do widget"
       })
     }
   }

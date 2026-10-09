@@ -72,10 +72,10 @@ System.register([], function (e) {
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "Nič v vodiču se ne ujema s to besedo. Poskusite drugo ali pa odprite zgornje oddelke.",
         helpAnd: "in",
-        firstRunTitle: "New here?",
+        firstRunTitle: "Nova tukaj?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "Odpri vodič.",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "Prosto",
         helpStartTitle: "Začnite tukaj: trije koraki",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -120,7 +120,7 @@ System.register([], function (e) {
         helpKeep1: "Saved views are kept in this browser, on this computer. Nobody else can see them.",
         helpKeep2: "A different browser, a different computer or a private window shows an empty list.",
         helpKeep3: "Clearing your browsing history or site data deletes them. Choose Download all first if you want a copy.",
-        helpTroubleTitle: "Če je kaj narobe.",
+        helpTroubleTitle: "Če je kaj narobe",
         helpTroubleSave: "Save instance stays greyed out: the name box is empty, or this widget is not connected to a map. Type a name, and tell the GIS Division if it is still greyed out.",
         helpTroubleDuplicate: "It says the name already exists: another saved view has that name. Pick a different name, or rename the old one first.",
         helpTroubleNoChange: "Loading seems to change nothing: the view was saved on a different map, or those layers are no longer in this app. A warning appears when the map does not match.",
@@ -129,10 +129,12 @@ System.register([], function (e) {
         helpTroubleUpload: "Upload instances will not take the file: only a .txt file downloaded from this widget works. Do not rename or edit that file.",
         helpTroubleGone: "The list is empty and it was not before: browsing data was cleared, or this is a different browser or computer.",
         helpTroubleContact: "Still stuck? Contact the GIS Division and mention the Save Instance name and this app.",
-        helpTipsTitle: "Dobro je vedeti.",
+        helpTipsTitle: "Dobro je vedeti",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

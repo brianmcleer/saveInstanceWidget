@@ -72,10 +72,10 @@ System.register([], function (e) {
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "Tidak ada dalam panduan cocok kata itu. Coba yang lain, atau buka bagian di atas.",
         helpAnd: "dan",
-        firstRunTitle: "New here?",
+        firstRunTitle: "Baru di sini?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "Buka panduannya.",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "Bubarkan",
         helpStartTitle: "Mulai dari sini: tiga langkah",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -132,7 +132,9 @@ System.register([], function (e) {
         helpTipsTitle: "Baik untuk mengetahui",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

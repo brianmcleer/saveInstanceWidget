@@ -173,5 +173,7 @@ export default {
   helpTipsTitle: 'Good to know',
   helpTips1: 'Short names work best. The list is easier to read and easier to filter.',
   helpTips2: 'Choose Download all now and then, so a cleared browser does not cost you everything.',
-  helpTips3: 'Clear graphics only takes drawings off the map. It never deletes a saved view.'
+  helpTips3: 'Clear graphics only takes drawings off the map. It never deletes a saved view.',
+  unknownError: 'unknown error',
+  unserializableError: 'unserializable error'
 }

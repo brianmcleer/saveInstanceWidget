@@ -72,10 +72,10 @@ System.register([], function (e) {
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "ไม่มีอะไรในคู่มือที่ตรงกับคํานั้น ลอง เปิด อีก ส่วน หนึ่ง ข้าง บน.",
         helpAnd: "และ",
-        firstRunTitle: "New here?",
+        firstRunTitle: "ใหม่ที่นี่?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
-        firstRunHelpLink: "เปิดคู่มือ",
-        firstRunDismiss: "Dismiss",
+        firstRunHelpLink: "เปิดคู่มือ.",
+        firstRunDismiss: "ไม่สนใจ",
         helpStartTitle: "เริ่มที่นี่: สามขั้นตอน",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -132,7 +132,9 @@ System.register([], function (e) {
         helpTipsTitle: "ดีที่ได้รู้",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

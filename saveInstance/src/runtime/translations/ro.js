@@ -72,10 +72,10 @@ System.register([], function (e) {
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
         helpNoMatches: "Nimic din ghid nu se potriveşte cu acest cuvânt. Încearcă altul, sau deschide secţiunile de mai sus.",
         helpAnd: "și",
-        firstRunTitle: "New here?",
+        firstRunTitle: "Nou aici?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
         firstRunHelpLink: "Deschide ghidul.",
-        firstRunDismiss: "Dismiss",
+        firstRunDismiss: "Liber",
         helpStartTitle: "Începe aici: trei pași",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -129,10 +129,12 @@ System.register([], function (e) {
         helpTroubleUpload: "Upload instances will not take the file: only a .txt file downloaded from this widget works. Do not rename or edit that file.",
         helpTroubleGone: "The list is empty and it was not before: browsing data was cleared, or this is a different browser or computer.",
         helpTroubleContact: "Still stuck? Contact the GIS Division and mention the Save Instance name and this app.",
-        helpTipsTitle: "E bine de ştiut.",
+        helpTipsTitle: "E bine de ştiut",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }

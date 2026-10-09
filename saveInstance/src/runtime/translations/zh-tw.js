@@ -70,12 +70,12 @@ System.register([], function (e) {
         helpTitle: "說明",
         helpIntro: "Set the map up the way you need it, save it under a name, and bring it back with one click whenever you want it again.",
         helpSearchPlaceholder: "Search the guide (try \"download\" or \"delete\")",
-        helpNoMatches: "向导裡沒有什麼能符合這個詞的 再試一次,或者打開上面的區域",
+        helpNoMatches: "向导裡沒有什麼能符合這個詞的 再試一次,或者打開上面的區域.",
         helpAnd: "和",
-        firstRunTitle: "New here?",
+        firstRunTitle: "新來的?",
         firstRunBody: "Set the map how you want it, type a short name in the box above, then choose Save instance.",
-        firstRunHelpLink: "打開向导",
-        firstRunDismiss: "Dismiss",
+        firstRunHelpLink: "打開向导.",
+        firstRunDismiss: "解散",
         helpStartTitle: "從這裡開始: 三步",
         helpStart1: "Set the map the way you want it: zoom to the right spot, turn layers on or off, pick a background.",
         helpStart2: "Type a short name in the Instance name box at the top, then choose Save instance.",
@@ -132,7 +132,9 @@ System.register([], function (e) {
         helpTipsTitle: "很高興知道",
         helpTips1: "Short names work best. The list is easier to read and easier to filter.",
         helpTips2: "Choose Download all now and then, so a cleared browser does not cost you everything.",
-        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view."
+        helpTips3: "Clear graphics only takes drawings off the map. It never deletes a saved view.",
+        unknownError: "unknown error",
+        unserializableError: "unserializable error"
       })
     }
   }
