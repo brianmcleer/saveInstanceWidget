@@ -1261,18 +1261,594 @@
           }
         },
         "bs": {
-          "file": "b442a43c589e",
+          "file": "00cd20676219",
           "counts": {
             "esri": 13,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 115,
             "stale": 0,
-            "missing": 119
+            "missing": 4
           },
-          "entries": {}
+          "entries": {
+            "_widgetLabel": {
+              "t": "Snimi kao VCard...",
+              "src": "machine",
+              "h": "f27fcced973d"
+            },
+            "saveHeading": {
+              "t": "Snimi trenutnu mapu",
+              "src": "machine",
+              "h": "c6b85adb49b2"
+            },
+            "instanceNameLabel": {
+              "t": "Ime _prikazivača:",
+              "src": "machine",
+              "h": "e98a2eb26d10"
+            },
+            "instanceNameHint": {
+              "t": "Daj ovom snimljenom pogledu kratko, prepoznatljivo ime.",
+              "src": "machine",
+              "h": "572f2de85cc7"
+            },
+            "saveInstance": {
+              "t": "Snimi instancu",
+              "src": "machine",
+              "h": "826ed3af3cab"
+            },
+            "saved": {
+              "t": "Snimljena instanca \\\"{name}\\\".",
+              "src": "machine",
+              "h": "2ac58ffec342"
+            },
+            "savedHeading": {
+              "t": "Snimljene pojave",
+              "src": "machine",
+              "h": "84587f6a4d9b"
+            },
+            "emptyState": {
+              "t": "Nema još snimljenih primjera. Unesite ime iznad i odaberite Snimi za pohranu trenutne karte.",
+              "src": "machine",
+              "h": "f5d8f84aa399"
+            },
+            "searchLabel": {
+              "t": "Filtriraj snimljene instance",
+              "src": "machine",
+              "h": "f61d0f099ece"
+            },
+            "searchPlaceholder": {
+              "t": "Filter po imenu",
+              "src": "machine",
+              "h": "552d9c89dc5a"
+            },
+            "sortLabel": {
+              "t": "Sortiraj primjere",
+              "src": "machine",
+              "h": "8fba3d76e160"
+            },
+            "sortNameAsc": {
+              "t": "Ime",
+              "src": "machine",
+              "h": "fd07da4083fb"
+            },
+            "sortNameDesc": {
+              "t": "Ime",
+              "src": "machine",
+              "h": "04e1aeaf4c0a"
+            },
+            "sortNewest": {
+              "t": "Najnovije prvo",
+              "src": "machine",
+              "h": "f5ec7772ca9b"
+            },
+            "sortOldest": {
+              "t": "Najstarija prva.",
+              "src": "machine",
+              "h": "6a99c65c33fe"
+            },
+            "noMatches": {
+              "t": "Nijedan slučaj se ne poklapa sa \\\"{query}\\\".",
+              "src": "machine",
+              "h": "25adb6c8a56a"
+            },
+            "tableCaption": {
+              "t": "Snimio instance mape i akcije dostupne za svaku od njih.",
+              "src": "machine",
+              "h": "3ebf8af1fbcd"
+            },
+            "showLegend": {
+              "t": "Pokaži šta svaka akcija radi",
+              "src": "machine",
+              "h": "0b54480583e2"
+            },
+            "legendHeading": {
+              "t": "Referenca akcije",
+              "src": "machine",
+              "h": "9505f4c771c9"
+            },
+            "closeLegend": {
+              "t": "Zatvori referencu akcije",
+              "src": "machine",
+              "h": "026e904f0384"
+            },
+            "loadAction": {
+              "t": "Učitaj \\\"{name}\\\" na kartu",
+              "src": "machine",
+              "h": "b2b21057ca07"
+            },
+            "renameAction": {
+              "t": "Preimenuj \\\"{name}\\\"",
+              "src": "machine",
+              "h": "36b06a5c777f"
+            },
+            "downloadAction": {
+              "t": "Preuzmi \\\"{name}\\\"",
+              "src": "machine",
+              "h": "15e77b16cc03"
+            },
+            "clearGraphicsAction": {
+              "t": "Očisti grafiku za \\\"{name}\\\" iz mape",
+              "src": "machine",
+              "h": "62133611d466"
+            },
+            "deleteAction": {
+              "t": "Obriši \\\"{name}\\\"",
+              "src": "machine",
+              "h": "48d9a4395b34"
+            },
+            "loaded": {
+              "t": "Učitana instanca \\\"{name}\\\".",
+              "src": "machine",
+              "h": "ae57f20e30fa"
+            },
+            "renameTitle": {
+              "t": "Preimenuj instancu",
+              "src": "machine",
+              "h": "9b6f918f1f36"
+            },
+            "renameLabel": {
+              "t": "Novi naziv za \\\"{name}\\\"",
+              "src": "machine",
+              "h": "547ec6e57020"
+            },
+            "renamed": {
+              "t": "Preimenovano u \\\"{name}\\\".",
+              "src": "machine",
+              "h": "1bfb14bb633c"
+            },
+            "deleteTitle": {
+              "t": "Obriši instancu",
+              "src": "machine",
+              "h": "3a62c74d0acb"
+            },
+            "deleteConfirm": {
+              "t": "Izbriši priču \\\"{name}\\\"? Ovo se ne može poništiti.",
+              "src": "machine",
+              "h": "3aa04315b24a"
+            },
+            "deleted": {
+              "t": "Izbrisana instanca \\\"{name}\\\".",
+              "src": "machine",
+              "h": "586b55c86ded"
+            },
+            "graphicsCleared": {
+              "t": "Očišćena grafika za \\\"{name}\\\".",
+              "src": "machine",
+              "h": "d94461964f79"
+            },
+            "uploadInstances": {
+              "t": "Učitaj instance",
+              "src": "machine",
+              "h": "b6e0cf314883"
+            },
+            "downloadInstances": {
+              "t": "Preuzmi sve",
+              "src": "machine",
+              "h": "d69edf7c4545"
+            },
+            "uploadHint": {
+              "t": "Uvezi instance iz .txt datoteke koju ste preuzeli.",
+              "src": "machine",
+              "h": "e9cd5ec94bcd"
+            },
+            "replaceTitle": {
+              "t": "Već postoji pojava",
+              "src": "machine",
+              "h": "685cceb72520"
+            },
+            "replaceConfirm": {
+              "t": "Primjer pod imenom \\\"{name}\\\" već postoji. Zamijeniti ga uvoznim?",
+              "src": "machine",
+              "h": "4be4d8a237f7"
+            },
+            "keepExisting": {
+              "t": "Zadrži postojeće",
+              "src": "machine",
+              "h": "5e8b2cfbcfca"
+            },
+            "errNoMap": {
+              "t": "Spoji ovaj grafički element na mapu prije snimanja.",
+              "src": "machine",
+              "h": "f7026064859c"
+            },
+            "errNoName": {
+              "t": "Unesite prvo ime primjera.",
+              "src": "machine",
+              "h": "91129c64b0c6"
+            },
+            "errDuplicate": {
+              "t": "Primjer pod imenom \\\"{name}\\\" već postoji. Izaberite neko drugo ime.",
+              "src": "machine",
+              "h": "d4c3fb595fab"
+            },
+            "errStorageQuota": {
+              "t": "Limit pohrane preglednika je dosegnut, tako da pojava nije snimljena. Izbrišite neke primjere ili smanjite snimljene grafike.",
+              "src": "machine",
+              "h": "641e10d7f028"
+            },
+            "errStorage": {
+              "t": "Primjedba se nije mogla snimiti u spremište preglednika.",
+              "src": "machine",
+              "h": "8d501c0c9ff9"
+            },
+            "errStorageUnavailable": {
+              "t": "Skladištenje preglednika nije dostupno, tako da se primjerci ne mogu snimiti na ovom uređaju.",
+              "src": "machine",
+              "h": "44bc32a16823"
+            },
+            "errInvalidFile": {
+              "t": "Izaberi ispravnu .txt datoteku koju izveze ovaj grafički element.",
+              "src": "machine",
+              "h": "bbb6e4ecdcda"
+            },
+            "errInvalidContent": {
+              "t": "Ta datoteka nije važeći izvoz instance.",
+              "src": "machine",
+              "h": "a04abb7f76ac"
+            },
+            "errNothingToDownload": {
+              "t": "Nema snimljenih primjera za preuzimanje.",
+              "src": "machine",
+              "h": "1ff45da62c43"
+            },
+            "errWrongMap": {
+              "t": "Ovaj slučaj je snimljen iz druge mape. Neke postavke možda neće biti primjenjive.",
+              "src": "machine",
+              "h": "9e0a1b61d3df"
+            },
+            "errLoadFailed": {
+              "t": "Ovaj slučaj nije mogao biti u potpunosti učitan.",
+              "src": "machine",
+              "h": "de6199c87ce6"
+            },
+            "helpIntro": {
+              "t": "Postavi kartu onako kako ti je potrebno, snimi je pod imenom i vrati je jednim klikom kad god želiš.",
+              "src": "machine",
+              "h": "c7fdadb36bef"
+            },
+            "helpSearchPlaceholder": {
+              "t": "Traži vodič (pokušajte otpakovati iliobriši",
+              "src": "machine",
+              "h": "d9f7c7b00a9e"
+            },
+            "helpNoMatches": {
+              "t": "Ništa u vodiču ne odgovara toj riječi.",
+              "src": "machine",
+              "h": "3fe179f75330"
+            },
+            "firstRunTitle": {
+              "t": "Novi ovdje?",
+              "src": "machine",
+              "h": "b81f2e17e001"
+            },
+            "firstRunBody": {
+              "t": "Postavite kartu kako želite, unesite skraćeno ime u gore navedenu kutiju, a zatim odaberite Save instance.",
+              "src": "machine",
+              "h": "3bfd17569ed5"
+            },
+            "firstRunHelpLink": {
+              "t": "Otvori vodič.",
+              "src": "machine",
+              "h": "2447dd6134ea"
+            },
+            "firstRunDismiss": {
+              "t": "Otpust",
+              "src": "machine",
+              "h": "70afe9eff3f2"
+            },
+            "helpStartTitle": {
+              "t": "Počnite ovdje: tri koraka",
+              "src": "machine",
+              "h": "789320b4831d"
+            },
+            "helpStart1": {
+              "t": "Postavi kartu kako želite: uvećaj na pravo mjesto, uključi ili isključi slojeve, izaberi pozadinu.",
+              "src": "machine",
+              "h": "b7f433e419aa"
+            },
+            "helpStart2": {
+              "t": "Upišite skraćeno ime u Insance ime okvir na vrhu, zatim odaberite Save instance.",
+              "src": "machine",
+              "h": "a83ceba44da2"
+            },
+            "helpStart3": {
+              "t": "Da biste joj se kasnije vratili, nađite ime u donjoj listi i izaberite dugme Učitaj u njenom redu.",
+              "src": "machine",
+              "h": "24e620451629"
+            },
+            "helpSaveTitle": {
+              "t": "Snimam mapu",
+              "src": "machine",
+              "h": "1fd40d486891"
+            },
+            "helpSaveIntro": {
+              "t": "Spasavanje slika mapu upravo onako kako izgleda sada.",
+              "src": "machine",
+              "h": "df8c3358a31a"
+            },
+            "helpSaveWhat": {
+              "t": "Ova aplikacija snima {what}.",
+              "src": "machine",
+              "h": "f61bab31eed7"
+            },
+            "helpSaveWhatViewpoint": {
+              "t": "gdje je mapa uvećana",
+              "src": "machine",
+              "h": "33fe134757ec"
+            },
+            "helpSaveWhatLayers": {
+              "t": "Koji se slojevi okreću i kako su providni,",
+              "src": "machine",
+              "h": "6794c917e59d"
+            },
+            "helpSaveWhatFilters": {
+              "t": "Filteri i oznake postavljeni na tim slojevima",
+              "src": "machine",
+              "h": "9f32f365f2eb"
+            },
+            "helpSaveWhatBasemap": {
+              "t": "pozadina",
+              "src": "machine",
+              "h": "3c5987f24871"
+            },
+            "helpSaveWhatTime": {
+              "t": "gdje je postavljen klizač vremena",
+              "src": "machine",
+              "h": "70c96d2952eb"
+            },
+            "helpSaveWhatGraphics": {
+              "t": "sve iscrtano na karti",
+              "src": "machine",
+              "h": "a12ecfaf0258"
+            },
+            "helpSaveUnique": {
+              "t": "Svako ime mora biti drugačije. Ako je ime već na listi, od vas se traži da izaberete drugo.",
+              "src": "machine",
+              "h": "a4207fdc18d3"
+            },
+            "helpSaveNoOverwrite": {
+              "t": "Nema prepisavanja. Da biste zamijenili snimljeni pogled, prvo izbrišite stari ili snimite pod novim imenom.",
+              "src": "machine",
+              "h": "48e0f4583e9c"
+            },
+            "helpLoadTitle": {
+              "t": "Vraćam snimljeni pogled",
+              "src": "machine",
+              "h": "f424e60016b9"
+            },
+            "helpLoad1": {
+              "t": "Izaberite dugme Učitavanje u nizu i mapa se mijenja u skladu sa onim što je snimljeno. Mali okretač prikazuje u tom redu dok radi; dajte mu trenutak.",
+              "src": "machine",
+              "h": "9692e22b3fba"
+            },
+            "helpLoad2": {
+              "t": "Učitavanje mijenja samo mapu. Ništa u listi nije izmijenjeno tako da možete učitati isti pogled koliko god često želite.",
+              "src": "machine",
+              "h": "82b2ff9a4c70"
+            },
+            "helpLoadGraphics": {
+              "t": "Crteži se vraćaju na vrh mape. Koristite čiste grafike u istom redu da ih ponovo skinete bez brisanja snimljenog pogleda.",
+              "src": "machine",
+              "h": "a7b54e059ac1"
+            },
+            "helpLoadWrongMap": {
+              "t": "Ako je snimljeni pogled napravljen na drugoj mapi, dobijate upozorenje, a primjenjuju se samo dijelovi koji još odgovaraju.",
+              "src": "machine",
+              "h": "03ef0e77fb76"
+            },
+            "helpLoadDefault": {
+              "t": "Ova aplikacija se otvara sa snimljenim prikazom pod imenom \\\"{name}\\\" koji je već učitan, kada imate jedan pod tim imenom.",
+              "src": "machine",
+              "h": "e293ae5cd978"
+            },
+            "helpMenuTitle": {
+              "t": "Dugmad u svakom redu",
+              "src": "machine",
+              "h": "f28662d25ea0"
+            },
+            "helpMenuIntro": {
+              "t": "Svaki red ima ista dugmad ovim redoslijedom. Pokažite na jedan da vidite šta radi ili koristite Pokažite šta svaka akcija radi iznad liste.",
+              "src": "machine",
+              "h": "1220567a8082"
+            },
+            "helpMenuLoad": {
+              "t": "Učitaj: vraća taj snimljeni pogled nazad na mapu.",
+              "src": "machine",
+              "h": "bce9a4f36971"
+            },
+            "helpMenuRename": {
+              "t": "Preimenuj: daje snimljenom pogledu drugo ime.",
+              "src": "machine",
+              "h": "60c81484035a"
+            },
+            "helpMenuDownload": {
+              "t": "Preuzmi: snimi taj jedan pogled na datoteku na vašem računaru.",
+              "src": "machine",
+              "h": "eaa3d54862ab"
+            },
+            "helpMenuClear": {
+              "t": "Čista grafika: skida crteže tog pogleda sa mape i ostavlja sačuvani pogled u listi.",
+              "src": "machine",
+              "h": "0a223bab4d22"
+            },
+            "helpMenuDelete": {
+              "t": "Obriši: uklanja snimljeni pogled zauvijek. Od vas se traži da ga prvo potvrdite.",
+              "src": "machine",
+              "h": "905ceed3e512"
+            },
+            "helpShareTitle": {
+              "t": "Dijeljenje s kolegom",
+              "src": "machine",
+              "h": "02e3d3b9a79f"
+            },
+            "helpShareIntro": {
+              "t": "Snimljeni pogledi ostaju u vašem pregledniku, tako da dijeljenje jednog znači slanje datoteke.",
+              "src": "machine",
+              "h": "b0f0d605157c"
+            },
+            "helpShare1": {
+              "t": "Preuzimanje svega na dnu stavlja svaki pogled u jednu datoteku. Preuzimanje u jednom redu šalje samo taj.",
+              "src": "machine",
+              "h": "c7e4959bd0e3"
+            },
+            "helpShare2": {
+              "t": "Druga osoba bira slučajeve slanja na dnu i bira datoteku koju ste poslali.",
+              "src": "machine",
+              "h": "e9f836e48542"
+            },
+            "helpShare3": {
+              "t": "Ukoliko je ime koje već imaju u datoteci, pita se da li će je zamijeniti ili zadržati postojeću.",
+              "src": "machine",
+              "h": "f8869bd0a90a"
+            },
+            "helpShare4": {
+              "t": "Oboje morate koristiti istu mapu da bi datoteka imala smisla.",
+              "src": "machine",
+              "h": "8adf2fb74e5b"
+            },
+            "helpOrganizeTitle": {
+              "t": "Pronalaženje onoga što si spasio",
+              "src": "machine",
+              "h": "b9514f367e3c"
+            },
+            "helpOrganize1": {
+              "t": "Filter po imenu iznad liste krije sve što se ne poklapa sa vašim tipkanjem.",
+              "src": "machine",
+              "h": "1f0d40ea2f4f"
+            },
+            "helpOrganize2": {
+              "t": "Sortiranje instanci preuređuju listu: Najnovije prvo, Najstarije prvo, Ime (A-Z) ili Ime (Z-A).",
+              "src": "machine",
+              "h": "7d77dfd91e34"
+            },
+            "helpOrganize3": {
+              "t": "Kolona \\\"Snimljeno\\\" prikazuje datum kada je svaki od njih napravljen.",
+              "src": "machine",
+              "h": "7cf2e082079f"
+            },
+            "helpKeepTitle": {
+              "t": "Gdje se ovo čuva?",
+              "src": "machine",
+              "h": "06ad3460f7f4"
+            },
+            "helpKeepIntro": {
+              "t": "Ništa ovdje nije pohranjeno na serveru.",
+              "src": "machine",
+              "h": "fb544b457a1d"
+            },
+            "helpKeep1": {
+              "t": "Snimljeni pogledi se čuvaju u ovom pregledniku na ovom računaru. Niko drugi ih ne može vidjeti.",
+              "src": "machine",
+              "h": "ace7034167d3"
+            },
+            "helpKeep2": {
+              "t": "Drugi preglednik, drugi računar ili privatni prozor prikazuje praznu listu.",
+              "src": "machine",
+              "h": "692e559d73cf"
+            },
+            "helpKeep3": {
+              "t": "Brisanje historije ili podataka o pregledu stranica ih briše. Odaberite prvo preuzimanje ako želite kopiju.",
+              "src": "machine",
+              "h": "87db6787ebee"
+            },
+            "helpTroubleTitle": {
+              "t": "Ako nešto nije u redu",
+              "src": "machine",
+              "h": "6f7fec3ff1e0"
+            },
+            "helpTroubleSave": {
+              "t": "Snimi instancu ostaje siva: okvir za ime je prazan ili ovaj grafički element nije spojen na mapu. Upišite ime i recite GIS diviziji ako je još uvijek sivo.",
+              "src": "machine",
+              "h": "865964ea3ea2"
+            },
+            "helpTroubleDuplicate": {
+              "t": "Piše da ime već postoji: drugi snimljeni pogled ima to ime. Izaberite drugo ime ili preimenujte prvo staro.",
+              "src": "machine",
+              "h": "69d7bbb511fc"
+            },
+            "helpTroubleNoChange": {
+              "t": "Učitavanje izgleda ne mijenja ništa: pogled je snimljen na drugoj mapi ili ti slojevi više nisu u ovoj aplikaciji. Pojavljuje se upozorenje kada se mapa ne poklapa.",
+              "src": "machine",
+              "h": "6b65edb49ed5"
+            },
+            "helpTroubleLimit": {
+              "t": "Kaže da ste dostigli ograničenje: ova aplikacija drži najviše {max} snimljenih pregleda. Izbrišite jedan, a zatim ponovo snimite.",
+              "src": "machine",
+              "h": "8556e7071946"
+            },
+            "helpTroubleStorage": {
+              "t": "Kaže da je spremište puno ili nedostupno: pregledniku je ponestalo prostora ili blokira spremište. Izbrišite nekoliko snimljenih pregleda ili ostavite privatno pregledavanje.",
+              "src": "machine",
+              "h": "141848d146e4"
+            },
+            "helpTroubleUpload": {
+              "t": "Učitaj primjerke neće uzeti datoteku: samo .txt datoteka preuzeta iz ovog grafičkog elementa radi. Ne preimenuj ili izmijeni tu datoteku.",
+              "src": "machine",
+              "h": "c551dfdfb3a4"
+            },
+            "helpTroubleGone": {
+              "t": "Lista je prazna i nije bila prije: podaci o pregledu su izbrisani, ili je ovo drugi preglednik ili računar.",
+              "src": "machine",
+              "h": "738ba2dc3e60"
+            },
+            "helpTroubleContact": {
+              "t": "Još uvijek zapeo? Kontaktirajte GIS diviziju i spomenite ime Save Instance i ovu aplikaciju.",
+              "src": "machine",
+              "h": "ab1bc041e227"
+            },
+            "helpTipsTitle": {
+              "t": "Dobro je znati.",
+              "src": "machine",
+              "h": "79fc372dc790"
+            },
+            "helpTips1": {
+              "t": "Kratki nazivi najbolje funkcioniraju. Listu je lakše čitati i lakše filtrirati.",
+              "src": "machine",
+              "h": "12ee817889cb"
+            },
+            "helpTips2": {
+              "t": "Izaberi preuzeti sve sada i onda, tako da te čisti preglednik ne košta sve.",
+              "src": "machine",
+              "h": "a98abdde9a5d"
+            },
+            "helpTips3": {
+              "t": "Čista grafika uklanja samo crteže sa mape. Ona nikada ne briše snimljeni pogled.",
+              "src": "machine",
+              "h": "b59edad4277b"
+            },
+            "unknownError": {
+              "t": "nepoznata greška",
+              "src": "machine",
+              "h": "af6321ca7a8b"
+            },
+            "unserializableError": {
+              "t": "Neserijalizacijska greška",
+              "src": "machine",
+              "h": "76e73551597a"
+            }
+          }
         },
         "ca": {
           "file": "14dc8b942592",
@@ -6890,18 +7466,609 @@
           }
         },
         "hr": {
-          "file": "b442a43c589e",
+          "file": "1b33153b6331",
           "counts": {
             "esri": 13,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 118,
             "stale": 0,
-            "missing": 119
+            "missing": 1
           },
-          "entries": {}
+          "entries": {
+            "_widgetLabel": {
+              "t": "Spremi instancu",
+              "src": "machine",
+              "h": "f27fcced973d"
+            },
+            "saveHeading": {
+              "t": "Spremi trenutnu mapu",
+              "src": "machine",
+              "h": "c6b85adb49b2"
+            },
+            "instanceNameLabel": {
+              "t": "Ime insstance",
+              "src": "machine",
+              "h": "e98a2eb26d10"
+            },
+            "instanceNameHint": {
+              "t": "Daj ovom spremljenom pogledu kratko, prepoznatljivo ime.",
+              "src": "machine",
+              "h": "572f2de85cc7"
+            },
+            "saveInstance": {
+              "t": "Spremi instancu",
+              "src": "machine",
+              "h": "826ed3af3cab"
+            },
+            "saved": {
+              "t": "Spašena instanca “{name}”.",
+              "src": "machine",
+              "h": "2ac58ffec342"
+            },
+            "savedHeading": {
+              "t": "Snimljene instance",
+              "src": "machine",
+              "h": "84587f6a4d9b"
+            },
+            "emptyState": {
+              "t": "Ne spremljene instance još. Unesite ime iznad i odaberite Spremi instancu za pohranu trenutne karte.",
+              "src": "machine",
+              "h": "f5d8f84aa399"
+            },
+            "searchLabel": {
+              "t": "Filtriraj spremljene instance",
+              "src": "machine",
+              "h": "f61d0f099ece"
+            },
+            "searchPlaceholder": {
+              "t": "Filtar po imenu",
+              "src": "machine",
+              "h": "552d9c89dc5a"
+            },
+            "sortLabel": {
+              "t": "Sortiraj instance",
+              "src": "machine",
+              "h": "8fba3d76e160"
+            },
+            "sortNameAsc": {
+              "t": "Ime (A-Z)",
+              "src": "machine",
+              "h": "fd07da4083fb"
+            },
+            "sortNameDesc": {
+              "t": "Ime (Z-A)",
+              "src": "machine",
+              "h": "04e1aeaf4c0a"
+            },
+            "sortNewest": {
+              "t": "Najnovije prvo.",
+              "src": "machine",
+              "h": "f5ec7772ca9b"
+            },
+            "sortOldest": {
+              "t": "Najstarija prva.",
+              "src": "machine",
+              "h": "6a99c65c33fe"
+            },
+            "noMatches": {
+              "t": "Nijedan slučaj ne odgovara “{query}”.",
+              "src": "machine",
+              "h": "25adb6c8a56a"
+            },
+            "tableCaption": {
+              "t": "Sačuvane instance mape i akcije dostupne za svaku.",
+              "src": "machine",
+              "h": "3ebf8af1fbcd"
+            },
+            "showLegend": {
+              "t": "Pokažite što svaka radnja radi",
+              "src": "machine",
+              "h": "0b54480583e2"
+            },
+            "legendHeading": {
+              "t": "Referenca radnje",
+              "src": "machine",
+              "h": "9505f4c771c9"
+            },
+            "closeLegend": {
+              "t": "Zatvori referencu radnje",
+              "src": "machine",
+              "h": "026e904f0384"
+            },
+            "loadAction": {
+              "t": "Učitaj “{name}” na kartu",
+              "src": "machine",
+              "h": "b2b21057ca07"
+            },
+            "renameAction": {
+              "t": "Preimenuj “{name}”",
+              "src": "machine",
+              "h": "36b06a5c777f"
+            },
+            "downloadAction": {
+              "t": "Preuzmite “{name}”",
+              "src": "machine",
+              "h": "15e77b16cc03"
+            },
+            "clearGraphicsAction": {
+              "t": "Očisti grafiku za “{name}” s karte",
+              "src": "machine",
+              "h": "62133611d466"
+            },
+            "deleteAction": {
+              "t": "Obriši “{name}”",
+              "src": "machine",
+              "h": "48d9a4395b34"
+            },
+            "loadingInstance": {
+              "t": "Učitavanje “{name}”...",
+              "src": "machine",
+              "h": "ab8b8cdadc1b"
+            },
+            "loaded": {
+              "t": "Učitana instanca “{name}”.",
+              "src": "machine",
+              "h": "ae57f20e30fa"
+            },
+            "renameTitle": {
+              "t": "Preimenuj instancu",
+              "src": "machine",
+              "h": "9b6f918f1f36"
+            },
+            "renameLabel": {
+              "t": "Novi naziv za “{name}”",
+              "src": "machine",
+              "h": "547ec6e57020"
+            },
+            "renamed": {
+              "t": "Preimenovano u{name}\\\".",
+              "src": "machine",
+              "h": "1bfb14bb633c"
+            },
+            "deleteTitle": {
+              "t": "Izbriši instancu",
+              "src": "machine",
+              "h": "3a62c74d0acb"
+            },
+            "deleteConfirm": {
+              "t": "Obriši instancu “{name}”? Ovo se ne može poništiti.",
+              "src": "machine",
+              "h": "3aa04315b24a"
+            },
+            "deleted": {
+              "t": "Izbrisana instanca “{name}”.",
+              "src": "machine",
+              "h": "586b55c86ded"
+            },
+            "graphicsCleared": {
+              "t": "Očišćena grafika za{name}“.",
+              "src": "machine",
+              "h": "d94461964f79"
+            },
+            "uploadInstances": {
+              "t": "Učitaj instance",
+              "src": "machine",
+              "h": "b6e0cf314883"
+            },
+            "downloadInstances": {
+              "t": "Preuzmi sve",
+              "src": "machine",
+              "h": "d69edf7c4545"
+            },
+            "uploadHint": {
+              "t": "Uvezi instance iz datoteke .txt koju ste preuzeli.",
+              "src": "machine",
+              "h": "e9cd5ec94bcd"
+            },
+            "replaceTitle": {
+              "t": "Instanca već postoji",
+              "src": "machine",
+              "h": "685cceb72520"
+            },
+            "replaceConfirm": {
+              "t": "Instanca pod nazivom “{name}” već postoji. Zamijeniti je uvoznom?",
+              "src": "machine",
+              "h": "4be4d8a237f7"
+            },
+            "keepExisting": {
+              "t": "Zadrži postojeće",
+              "src": "machine",
+              "h": "5e8b2cfbcfca"
+            },
+            "errNoMap": {
+              "t": "Spoji ovaj widget na mapu prije snimanja.",
+              "src": "machine",
+              "h": "f7026064859c"
+            },
+            "errNoName": {
+              "t": "Unesite prvo ime primjera.",
+              "src": "machine",
+              "h": "91129c64b0c6"
+            },
+            "errDuplicate": {
+              "t": "Instanca pod nazivom “{name}” već postoji. Odaberite drugo ime.",
+              "src": "machine",
+              "h": "d4c3fb595fab"
+            },
+            "errMaxInstances": {
+              "t": "Dosegli ste granicu od {max} spremljenih instanci. Izbrišite jedan prije spremanja drugog.",
+              "src": "machine",
+              "h": "8b8f2a249e26"
+            },
+            "errStorageQuota": {
+              "t": "Granica pohrane preglednika je dosegnuta, tako da instanca nije spremljena. Izbrišite neke primjere ili smanjite spremljene grafike.",
+              "src": "machine",
+              "h": "641e10d7f028"
+            },
+            "errStorage": {
+              "t": "Instanca se nije mogla spremiti u spremište preglednika.",
+              "src": "machine",
+              "h": "8d501c0c9ff9"
+            },
+            "errStorageUnavailable": {
+              "t": "Pohrana preglednika nije dostupna, tako da se instance ne mogu spremiti na ovom uređaju.",
+              "src": "machine",
+              "h": "44bc32a16823"
+            },
+            "errInvalidFile": {
+              "t": "Odaberite valjanu .txt datoteku koju izvozi ovaj widget.",
+              "src": "machine",
+              "h": "bbb6e4ecdcda"
+            },
+            "errInvalidContent": {
+              "t": "Ta datoteka nije valjan izvoz instance.",
+              "src": "machine",
+              "h": "a04abb7f76ac"
+            },
+            "errNothingToDownload": {
+              "t": "Ne postoje spremljene instance za preuzimanje.",
+              "src": "machine",
+              "h": "1ff45da62c43"
+            },
+            "errWrongMap": {
+              "t": "Ovaj slučaj je snimljen s druge karte. Neke postavke možda neće biti primjenjive.",
+              "src": "machine",
+              "h": "9e0a1b61d3df"
+            },
+            "errLoadFailed": {
+              "t": "Primjedba nije mogla biti u potpunosti učitana.",
+              "src": "machine",
+              "h": "de6199c87ce6"
+            },
+            "helpIntro": {
+              "t": "Podesite mapu onako kako vam je potrebno, spremite je pod imenom i vratite je jednim klikom kad god želite.",
+              "src": "machine",
+              "h": "c7fdadb36bef"
+            },
+            "helpSearchPlaceholder": {
+              "t": "Pretraži vodič (pokušajte sniziti ilibrisati",
+              "src": "machine",
+              "h": "d9f7c7b00a9e"
+            },
+            "helpNoMatches": {
+              "t": "Ništa u vodiču ne odgovara toj riječi. Pokušajte drugi, ili otvorite dijelove iznad.",
+              "src": "machine",
+              "h": "3fe179f75330"
+            },
+            "firstRunTitle": {
+              "t": "Novi ovdje?",
+              "src": "machine",
+              "h": "b81f2e17e001"
+            },
+            "firstRunBody": {
+              "t": "Postavite kartu kako želite, unesite kratko ime u okvir iznad, a zatim odaberite Save instance.",
+              "src": "machine",
+              "h": "3bfd17569ed5"
+            },
+            "firstRunHelpLink": {
+              "t": "Otvori vodič.",
+              "src": "machine",
+              "h": "2447dd6134ea"
+            },
+            "firstRunDismiss": {
+              "t": "Otpust",
+              "src": "machine",
+              "h": "70afe9eff3f2"
+            },
+            "helpStartTitle": {
+              "t": "Počnite ovdje: tri koraka",
+              "src": "machine",
+              "h": "789320b4831d"
+            },
+            "helpStart1": {
+              "t": "Postavite kartu kako želite: zumirajte na pravo mjesto, uključite ili isključite slojeve, izaberite pozadinu.",
+              "src": "machine",
+              "h": "b7f433e419aa"
+            },
+            "helpStart2": {
+              "t": "Upišite kratko ime u Instance ime okvir na vrhu, a zatim odaberite Save instance.",
+              "src": "machine",
+              "h": "a83ceba44da2"
+            },
+            "helpStart3": {
+              "t": "Da biste mu se kasnije vratili, nađite ime u donjem popisu i izaberite gumb Učitaj u svom redu.",
+              "src": "machine",
+              "h": "24e620451629"
+            },
+            "helpSaveTitle": {
+              "t": "Spremanje mape",
+              "src": "machine",
+              "h": "1fd40d486891"
+            },
+            "helpSaveIntro": {
+              "t": "Spasavanje slika kartu točno onako kako izgleda upravo sada.",
+              "src": "machine",
+              "h": "df8c3358a31a"
+            },
+            "helpSaveWhat": {
+              "t": "Ova aplikacija štedi {what}.",
+              "src": "machine",
+              "h": "f61bab31eed7"
+            },
+            "helpSaveWhatViewpoint": {
+              "t": "gdje je mapa uvećana",
+              "src": "machine",
+              "h": "33fe134757ec"
+            },
+            "helpSaveWhatLayers": {
+              "t": "koji su slojevi uključeni i kako su providni",
+              "src": "machine",
+              "h": "6794c917e59d"
+            },
+            "helpSaveWhatFilters": {
+              "t": "filtri i oznake postavljene na te slojeve",
+              "src": "machine",
+              "h": "9f32f365f2eb"
+            },
+            "helpSaveWhatBasemap": {
+              "t": "pozadinska karta",
+              "src": "machine",
+              "h": "3c5987f24871"
+            },
+            "helpSaveWhatTime": {
+              "t": "gdje je postavljen vremenski klizač",
+              "src": "machine",
+              "h": "70c96d2952eb"
+            },
+            "helpSaveWhatGraphics": {
+              "t": "bilo što nacrtano na karti",
+              "src": "machine",
+              "h": "a12ecfaf0258"
+            },
+            "helpSaveUnique": {
+              "t": "Svako ime mora biti drugačije. Ako je ime već na popisu, od vas se traži da odaberete drugo.",
+              "src": "machine",
+              "h": "a4207fdc18d3"
+            },
+            "helpSaveNoOverwrite": {
+              "t": "Ne postoji prepisivanje. Da biste zamijenili snimljeni prikaz, prvo izbrišite stari ili spremite pod novim imenom.",
+              "src": "machine",
+              "h": "48e0f4583e9c"
+            },
+            "helpSaveLimit": {
+              "t": "Ova aplikacija čuva najviše {max} spremljenih pregleda. Izbrišite jedan prije nego što snimite drugi.",
+              "src": "machine",
+              "h": "73531281ba76"
+            },
+            "helpLoadTitle": {
+              "t": "Vraćanje spremljenog pogleda",
+              "src": "machine",
+              "h": "f424e60016b9"
+            },
+            "helpLoad1": {
+              "t": "Odaberite gumb Učitaj u nizu i karta se mijenja kako bi odgovarala onome što je snimljeno. Mala okretnica prikazuje u tom redu dok radi; dajte joj trenutak.",
+              "src": "machine",
+              "h": "9692e22b3fba"
+            },
+            "helpLoad2": {
+              "t": "Učitavanje samo mijenja kartu. Ništa u popisu nije promijenjeno, tako da možete učitati isti pogled koliko god često želite.",
+              "src": "machine",
+              "h": "82b2ff9a4c70"
+            },
+            "helpLoadGraphics": {
+              "t": "Crteži se vraćaju na vrh karte. Koristite čistu grafiku u istom redu da ih ponovo skinete bez brisanja snimljenog pogleda.",
+              "src": "machine",
+              "h": "a7b54e059ac1"
+            },
+            "helpLoadWrongMap": {
+              "t": "Ako je spremljen pogled napravljen na drugoj mapi dobivate upozorenje, a primjenjuju se samo dijelovi koji još uvijek odgovaraju.",
+              "src": "machine",
+              "h": "03ef0e77fb76"
+            },
+            "helpLoadDefault": {
+              "t": "Ova aplikacija se otvara sa spremljenim prikazom pod nazivom “{name}” već učitan, kada imate jedan pod tim imenom.",
+              "src": "machine",
+              "h": "e293ae5cd978"
+            },
+            "helpMenuTitle": {
+              "t": "Tipke u svakom redu",
+              "src": "machine",
+              "h": "f28662d25ea0"
+            },
+            "helpMenuIntro": {
+              "t": "Svaki red ima iste tipke, ovim redoslijedom. Uperite na jedan da vidite što radi, ili koristite Pokažite što svaka radnja radi iznad popisa.",
+              "src": "machine",
+              "h": "1220567a8082"
+            },
+            "helpMenuLoad": {
+              "t": "Učitaj: vraća taj spremljeni pogled natrag na kartu.",
+              "src": "machine",
+              "h": "bce9a4f36971"
+            },
+            "helpMenuRename": {
+              "t": "Preimenuj: daje spremljenom pogledu drugo ime.",
+              "src": "machine",
+              "h": "60c81484035a"
+            },
+            "helpMenuDownload": {
+              "t": "Preuzimanje: sprema taj jedan pogled na datoteku na vašem računalu.",
+              "src": "machine",
+              "h": "eaa3d54862ab"
+            },
+            "helpMenuClear": {
+              "t": "Čista grafika: skida crteže tog pogleda s karte i ostavlja sačuvani pogled na popisu.",
+              "src": "machine",
+              "h": "0a223bab4d22"
+            },
+            "helpMenuDelete": {
+              "t": "Obriši: uklanja spremljeni pogled zauvijek. Od vas se traži da prvo potvrdite.",
+              "src": "machine",
+              "h": "905ceed3e512"
+            },
+            "helpShareTitle": {
+              "t": "Dijeljenje s kolegom",
+              "src": "machine",
+              "h": "02e3d3b9a79f"
+            },
+            "helpShareIntro": {
+              "t": "Sačuvani pogledi ostaju u vašem pregledniku, tako da dijeljenje jednog znači slanje datoteke.",
+              "src": "machine",
+              "h": "b0f0d605157c"
+            },
+            "helpShare1": {
+              "t": "Preuzmite sve na dnu stavlja svaki pogled na popisu u jednu datoteku. Preuzmite u jednom redu šalje samo taj jedan.",
+              "src": "machine",
+              "h": "c7e4959bd0e3"
+            },
+            "helpShare2": {
+              "t": "Druga osoba bira Upload instance na dnu i bira datoteku koju ste poslali.",
+              "src": "machine",
+              "h": "e9f836e48542"
+            },
+            "helpShare3": {
+              "t": "Ako je ime koje već imaju u datoteci, pitaju se treba li ga zamijeniti ili zadržati postojećim.",
+              "src": "machine",
+              "h": "f8869bd0a90a"
+            },
+            "helpShare4": {
+              "t": "Oboje morate koristiti istu kartu da bi datoteka imala smisla.",
+              "src": "machine",
+              "h": "8adf2fb74e5b"
+            },
+            "helpOrganizeTitle": {
+              "t": "Pronalaženje onoga što si spasio",
+              "src": "machine",
+              "h": "b9514f367e3c"
+            },
+            "helpOrganize1": {
+              "t": "Filtar po imenu iznad popisa skriva sve što se ne poklapa s onim što ukucate.",
+              "src": "machine",
+              "h": "1f0d40ea2f4f"
+            },
+            "helpOrganize2": {
+              "t": "Sortiraj instance preuređuju popis: Najnoviji prvi, Najstariji prvi, Ime (A-Z) ili Ime (Z-A).",
+              "src": "machine",
+              "h": "7d77dfd91e34"
+            },
+            "helpOrganize3": {
+              "t": "U spašenom stupcu prikazan je datum svakog od njih.",
+              "src": "machine",
+              "h": "7cf2e082079f"
+            },
+            "helpKeepTitle": {
+              "t": "Gdje se to čuva?",
+              "src": "machine",
+              "h": "06ad3460f7f4"
+            },
+            "helpKeepIntro": {
+              "t": "Ništa ovdje nije pohranjeno na serveru.",
+              "src": "machine",
+              "h": "fb544b457a1d"
+            },
+            "helpKeep1": {
+              "t": "Snimljeni pogledi se čuvaju u ovom pregledniku, na ovom računalu. Nitko ih drugi ne može vidjeti.",
+              "src": "machine",
+              "h": "ace7034167d3"
+            },
+            "helpKeep2": {
+              "t": "Drugačiji preglednik, drugo računalo ili privatni prozor prikazuje prazan popis.",
+              "src": "machine",
+              "h": "692e559d73cf"
+            },
+            "helpKeep3": {
+              "t": "Brisanje vaše povijesti pregledavanja ili podataka o stranicama ih briše. Ako želite kopiju, prvo odaberite Preuzimanje.",
+              "src": "machine",
+              "h": "87db6787ebee"
+            },
+            "helpTroubleTitle": {
+              "t": "Ako nešto izgleda loše",
+              "src": "machine",
+              "h": "6f7fec3ff1e0"
+            },
+            "helpTroubleSave": {
+              "t": "Spremi instancu ostaje siva: ime okvir je prazan, ili ovaj widget nije spojen na kartu. Upišite ime, i recite GIS Division ako je još uvijek sive van.",
+              "src": "machine",
+              "h": "865964ea3ea2"
+            },
+            "helpTroubleDuplicate": {
+              "t": "Piše da ime već postoji: drugi spremljeni pogled ima to ime. Odaberite drugo ime, ili preimenujte prvo staro.",
+              "src": "machine",
+              "h": "69d7bbb511fc"
+            },
+            "helpTroubleNoChange": {
+              "t": "Učitavanje izgleda ne mijenja ništa: pogled je spremljen na drugoj karti, ili ti slojevi više nisu u ovoj aplikaciji. Pojavljuje se upozorenje kada se mapa ne poklapa.",
+              "src": "machine",
+              "h": "6b65edb49ed5"
+            },
+            "helpTroubleLimit": {
+              "t": "Piše da ste dosegli ograničenje: ova aplikacija drži najviše {max} pohranjenih pregleda. Izbrišite jedan, a zatim ponovno spremite.",
+              "src": "machine",
+              "h": "8556e7071946"
+            },
+            "helpTroubleStorage": {
+              "t": "Piše da je pohrana puna ili nedostupna: pregledniku je ponestalo prostora, ili blokira pohranu. Izbrišite nekoliko spremljenih pogleda, ili ostavite privatno pregledavanje.",
+              "src": "machine",
+              "h": "141848d146e4"
+            },
+            "helpTroubleUpload": {
+              "t": "Upload instance neće uzeti datoteku: samo .txt datoteka preuzeta iz ovog grafičkog elementa radi. Nemojte preimenovati ili urediti tu datoteku.",
+              "src": "machine",
+              "h": "c551dfdfb3a4"
+            },
+            "helpTroubleGone": {
+              "t": "Popis je prazan i nije bio prije: pregledavanje podataka je izbrisano, ili je ovo drugačiji preglednik ili računalo.",
+              "src": "machine",
+              "h": "738ba2dc3e60"
+            },
+            "helpTroubleContact": {
+              "t": "Još uvijek zaglavi? Kontaktirajte GIS Division i spomenite Save Instance ime i ovu aplikaciju.",
+              "src": "machine",
+              "h": "ab1bc041e227"
+            },
+            "helpTipsTitle": {
+              "t": "Dobro je znati.",
+              "src": "machine",
+              "h": "79fc372dc790"
+            },
+            "helpTips1": {
+              "t": "Kratki nazivi rade najbolje. Lista je lakše čitati i lakše filtrirati.",
+              "src": "machine",
+              "h": "12ee817889cb"
+            },
+            "helpTips2": {
+              "t": "Odaberite Preuzmite sve s vremena na vrijeme, tako da izbrisani preglednik ne košta vas sve.",
+              "src": "machine",
+              "h": "a98abdde9a5d"
+            },
+            "helpTips3": {
+              "t": "Čista grafika skida samo crteže s karte. Ona nikada ne briše spremljen pogled.",
+              "src": "machine",
+              "h": "b59edad4277b"
+            },
+            "unknownError": {
+              "t": "nepoznata greška",
+              "src": "machine",
+              "h": "af6321ca7a8b"
+            },
+            "unserializableError": {
+              "t": "Neserijalizacijska greška",
+              "src": "machine",
+              "h": "76e73551597a"
+            }
+          }
         },
         "hu": {
           "file": "4423b244dca5",
@@ -15864,18 +17031,604 @@
           }
         },
         "sr": {
-          "file": "a35a03991b6a",
+          "file": "277f291a1b95",
           "counts": {
             "esri": 13,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 117,
             "stale": 0,
-            "missing": 119
+            "missing": 2
           },
-          "entries": {}
+          "entries": {
+            "_widgetLabel": {
+              "t": "Spremi insstancu",
+              "src": "machine",
+              "h": "f27fcced973d"
+            },
+            "saveHeading": {
+              "t": "Spremi trenutnu mapu",
+              "src": "machine",
+              "h": "c6b85adb49b2"
+            },
+            "instanceNameLabel": {
+              "t": "Name instance",
+              "src": "machine",
+              "h": "e98a2eb26d10"
+            },
+            "instanceNameHint": {
+              "t": "Daj ovom saèuvanom pogledu kratko, prepoznatljivo ime.",
+              "src": "machine",
+              "h": "572f2de85cc7"
+            },
+            "saveInstance": {
+              "t": "Sačuvaj primer",
+              "src": "machine",
+              "h": "826ed3af3cab"
+            },
+            "saved": {
+              "t": "Sačuvana instanca{name}\\\".",
+              "src": "machine",
+              "h": "2ac58ffec342"
+            },
+            "savedHeading": {
+              "t": "Sačuvane instance",
+              "src": "machine",
+              "h": "84587f6a4d9b"
+            },
+            "emptyState": {
+              "t": "Нема још сачуваних прим јерака. Унесите име изнад и изаберите Сачувај прим јерак за складиштење текуће мапе.",
+              "src": "machine",
+              "h": "f5d8f84aa399"
+            },
+            "searchLabel": {
+              "t": "Filter spremljen instance",
+              "src": "machine",
+              "h": "f61d0f099ece"
+            },
+            "searchPlaceholder": {
+              "t": "Filter po imenu",
+              "src": "machine",
+              "h": "552d9c89dc5a"
+            },
+            "sortLabel": {
+              "t": "Sortiraj slučajeve",
+              "src": "machine",
+              "h": "8fba3d76e160"
+            },
+            "sortNameAsc": {
+              "t": "Ime (A-Z)",
+              "src": "machine",
+              "h": "fd07da4083fb"
+            },
+            "sortNameDesc": {
+              "t": "Ime (Z-A)",
+              "src": "machine",
+              "h": "04e1aeaf4c0a"
+            },
+            "sortNewest": {
+              "t": "Najnovije prvo.",
+              "src": "machine",
+              "h": "f5ec7772ca9b"
+            },
+            "sortOldest": {
+              "t": "Najstarija prva.",
+              "src": "machine",
+              "h": "6a99c65c33fe"
+            },
+            "noMatches": {
+              "t": "Nijedan slučaj ne odgovara{query}\\\".",
+              "src": "machine",
+              "h": "25adb6c8a56a"
+            },
+            "tableCaption": {
+              "t": "Sačuvane instance mape i akcije dostupne za svakog.",
+              "src": "machine",
+              "h": "3ebf8af1fbcd"
+            },
+            "showLegend": {
+              "t": "Pokažite šta svaka akcija radi.",
+              "src": "machine",
+              "h": "0b54480583e2"
+            },
+            "legendHeading": {
+              "t": "Referenca akcije",
+              "src": "machine",
+              "h": "9505f4c771c9"
+            },
+            "closeLegend": {
+              "t": "Zatvori referencu radnje",
+              "src": "machine",
+              "h": "026e904f0384"
+            },
+            "loadAction": {
+              "t": "Учитај{name}“ на карту",
+              "src": "machine",
+              "h": "b2b21057ca07"
+            },
+            "renameAction": {
+              "t": "Preimenuj “{name}”",
+              "src": "machine",
+              "h": "36b06a5c777f"
+            },
+            "downloadAction": {
+              "t": "Preuzmite “{name}”",
+              "src": "machine",
+              "h": "15e77b16cc03"
+            },
+            "clearGraphicsAction": {
+              "t": "Očisti grafiku za{name}\\\" sa mape",
+              "src": "machine",
+              "h": "62133611d466"
+            },
+            "deleteAction": {
+              "t": "Obriši “{name}”",
+              "src": "machine",
+              "h": "48d9a4395b34"
+            },
+            "loadingInstance": {
+              "t": "Учитавам{name}“...",
+              "src": "machine",
+              "h": "ab8b8cdadc1b"
+            },
+            "loaded": {
+              "t": "Učitana instanca{name}\\\".",
+              "src": "machine",
+              "h": "ae57f20e30fa"
+            },
+            "renameTitle": {
+              "t": "Преименуј инстанцуQShortcut",
+              "src": "machine",
+              "h": "9b6f918f1f36"
+            },
+            "renameLabel": {
+              "t": "Novi naziv za{name}“",
+              "src": "machine",
+              "h": "547ec6e57020"
+            },
+            "renamed": {
+              "t": "Preimenovano u{name}\\\".",
+              "src": "machine",
+              "h": "1bfb14bb633c"
+            },
+            "deleteTitle": {
+              "t": "Обриши прим јеркуQShortcut",
+              "src": "machine",
+              "h": "3a62c74d0acb"
+            },
+            "deleteConfirm": {
+              "t": "Obrišite instancu “{name}”? Ovo se ne može poništiti.",
+              "src": "machine",
+              "h": "3aa04315b24a"
+            },
+            "deleted": {
+              "t": "Izbrisana instanca{name}\\\".",
+              "src": "machine",
+              "h": "586b55c86ded"
+            },
+            "graphicsCleared": {
+              "t": "Očišćena grafika za{name}\\\".",
+              "src": "machine",
+              "h": "d94461964f79"
+            },
+            "uploadInstances": {
+              "t": "Учитавање инстанци@ info: whatsthis",
+              "src": "machine",
+              "h": "b6e0cf314883"
+            },
+            "downloadInstances": {
+              "t": "Preuzimam sve",
+              "src": "machine",
+              "h": "d69edf7c4545"
+            },
+            "uploadHint": {
+              "t": "Uvezi instance iz .txt datoteke koju si skinuo.",
+              "src": "machine",
+              "h": "e9cd5ec94bcd"
+            },
+            "replaceTitle": {
+              "t": "Instanca veæ postoji.",
+              "src": "machine",
+              "h": "685cceb72520"
+            },
+            "replaceConfirm": {
+              "t": "Instanca pod nazivom{name}“ već postoji. Da je zamenimo uvoznim?",
+              "src": "machine",
+              "h": "4be4d8a237f7"
+            },
+            "keepExisting": {
+              "t": "Zadržite postojeæe",
+              "src": "machine",
+              "h": "5e8b2cfbcfca"
+            },
+            "errNoMap": {
+              "t": "Povežite ovaj grafički element sa mapom pre snimanja.",
+              "src": "machine",
+              "h": "f7026064859c"
+            },
+            "errNoName": {
+              "t": "Unesite prvo ime primera.",
+              "src": "machine",
+              "h": "91129c64b0c6"
+            },
+            "errDuplicate": {
+              "t": "Instanca pod nazivom{name}“ već postoji. Odaberite drugo ime.",
+              "src": "machine",
+              "h": "d4c3fb595fab"
+            },
+            "errMaxInstances": {
+              "t": "Dostigli ste granicu od {max} spašenih slučajeva. Izbrišite jedan pre nego što sačuvate drugi.",
+              "src": "machine",
+              "h": "8b8f2a249e26"
+            },
+            "errStorageQuota": {
+              "t": "Ograničenje za skladištenje pretraživača je dostignuto, tako da instanca nije spremljena. Obrišite neke instance ili smanjite spremljene grafike.",
+              "src": "machine",
+              "h": "641e10d7f028"
+            },
+            "errStorage": {
+              "t": "Instanca se nije mogla spremiti u spremište pretraživača.",
+              "src": "machine",
+              "h": "8d501c0c9ff9"
+            },
+            "errStorageUnavailable": {
+              "t": "Skladištenje preglednika nije dostupno, tako da se instance ne mogu spremiti na ovom uređaju.",
+              "src": "machine",
+              "h": "44bc32a16823"
+            },
+            "errInvalidFile": {
+              "t": "Odaberite ispravnu .txt datoteku koju izvozi ovaj grafički element.",
+              "src": "machine",
+              "h": "bbb6e4ecdcda"
+            },
+            "errInvalidContent": {
+              "t": "Taj fajl nije ispravan izvoz primera.",
+              "src": "machine",
+              "h": "a04abb7f76ac"
+            },
+            "errNothingToDownload": {
+              "t": "Ne postoje spremljeni slučajevi za preuzimanje.",
+              "src": "machine",
+              "h": "1ff45da62c43"
+            },
+            "errWrongMap": {
+              "t": "Ovaj slučaj je sačuvan sa druge mape. Neke postavke možda neće važiti.",
+              "src": "machine",
+              "h": "9e0a1b61d3df"
+            },
+            "errLoadFailed": {
+              "t": "Sluèaj nije mogao biti u potpunosti učitan.",
+              "src": "machine",
+              "h": "de6199c87ce6"
+            },
+            "helpIntro": {
+              "t": "Podesite mapu onako kako vam treba, saèuvajte je pod imenom, i donesite je sa jednim klikom kad god želite ponovo.",
+              "src": "machine",
+              "h": "c7fdadb36bef"
+            },
+            "helpSearchPlaceholder": {
+              "t": "Тражи водич (pokušajte download ili delete",
+              "src": "machine",
+              "h": "d9f7c7b00a9e"
+            },
+            "helpNoMatches": {
+              "t": "Ništa u vodièu ne odgovara toj reèi.",
+              "src": "machine",
+              "h": "3fe179f75330"
+            },
+            "firstRunTitle": {
+              "t": "Novi ovde?",
+              "src": "machine",
+              "h": "b81f2e17e001"
+            },
+            "firstRunBody": {
+              "t": "Podesite mapu kako želite, ukucajte kratko ime u kutiju iznad, onda izaberite Save instance.",
+              "src": "machine",
+              "h": "3bfd17569ed5"
+            },
+            "firstRunHelpLink": {
+              "t": "Otvori vodiè.",
+              "src": "machine",
+              "h": "2447dd6134ea"
+            },
+            "firstRunDismiss": {
+              "t": "Otpust.",
+              "src": "machine",
+              "h": "70afe9eff3f2"
+            },
+            "helpStartTitle": {
+              "t": "Poènite ovde: tri koraka.",
+              "src": "machine",
+              "h": "789320b4831d"
+            },
+            "helpStart1": {
+              "t": "Postavite mapu kako želite: zumirajte na pravo mesto, uključite ili isključite slojeve, izaberite pozadinu.",
+              "src": "machine",
+              "h": "b7f433e419aa"
+            },
+            "helpStart2": {
+              "t": "Ukucaj kratko ime u kutiju sa imenom Instance na vrhu, onda izaberi Save instance.",
+              "src": "machine",
+              "h": "a83ceba44da2"
+            },
+            "helpStart3": {
+              "t": "Da biste se kasnije vratili na nju, nađite ime u donjem spisku i izaberite dugme \\\"Učitaj\\\" u svom redu.",
+              "src": "machine",
+              "h": "24e620451629"
+            },
+            "helpSaveTitle": {
+              "t": "Snimam mapu.",
+              "src": "machine",
+              "h": "1fd40d486891"
+            },
+            "helpSaveIntro": {
+              "t": "Spasavanje slika mapu baš onako kako izgleda sada.",
+              "src": "machine",
+              "h": "df8c3358a31a"
+            },
+            "helpSaveWhat": {
+              "t": "Ova aplikacija štedi {what}.",
+              "src": "machine",
+              "h": "f61bab31eed7"
+            },
+            "helpSaveWhatViewpoint": {
+              "t": "gde je mapa uvećana",
+              "src": "machine",
+              "h": "33fe134757ec"
+            },
+            "helpSaveWhatLayers": {
+              "t": "Koji slojevi su ukljuèeni i kako su providni.",
+              "src": "machine",
+              "h": "6794c917e59d"
+            },
+            "helpSaveWhatFilters": {
+              "t": "Filteri i oznake postavljeni na tim slojevima",
+              "src": "machine",
+              "h": "9f32f365f2eb"
+            },
+            "helpSaveWhatBasemap": {
+              "t": "mapa pozadine",
+              "src": "machine",
+              "h": "3c5987f24871"
+            },
+            "helpSaveWhatTime": {
+              "t": "gde je vremenski klizač postavljen",
+              "src": "machine",
+              "h": "70c96d2952eb"
+            },
+            "helpSaveWhatGraphics": {
+              "t": "bilo šta nacrtano na mapi",
+              "src": "machine",
+              "h": "a12ecfaf0258"
+            },
+            "helpSaveUnique": {
+              "t": "Svako ime mora da bude drugaèije, ako je ime veæ na listi, od vas se traži da izaberete drugo.",
+              "src": "machine",
+              "h": "a4207fdc18d3"
+            },
+            "helpSaveNoOverwrite": {
+              "t": "Ne postoji prepisivanje. Da biste zamenili snimljeni pogled, prvo izbrišite stari ili sačuvajte pod novim imenom.",
+              "src": "machine",
+              "h": "48e0f4583e9c"
+            },
+            "helpLoadTitle": {
+              "t": "Vratiti saèuvan pogled",
+              "src": "machine",
+              "h": "f424e60016b9"
+            },
+            "helpLoad1": {
+              "t": "Odaberite dugme Učitaj u nizu i mapa se menja u skladu sa onim što je snimljeno. Mali okretač prikazuje u tom redu dok radi; dajte mu trenutak.",
+              "src": "machine",
+              "h": "9692e22b3fba"
+            },
+            "helpLoad2": {
+              "t": "Učitavanje samo menja mapu. Ništa u listi nije izmenjeno, tako da možete učitati isti pogled koliko god često želite.",
+              "src": "machine",
+              "h": "82b2ff9a4c70"
+            },
+            "helpLoadGraphics": {
+              "t": "Crteži se vraćaju na vrh mape. Koristite čistu grafiku u istom redu da ih ponovo skinete bez brisanja snimljenog pogleda.",
+              "src": "machine",
+              "h": "a7b54e059ac1"
+            },
+            "helpLoadWrongMap": {
+              "t": "Ako je snimljen pogled napravljen na drugoj mapi dobijate upozorenje, a primenjuju se samo delovi koji još uvek odgovaraju.",
+              "src": "machine",
+              "h": "03ef0e77fb76"
+            },
+            "helpLoadDefault": {
+              "t": "Ova aplikacija se otvara sa snimljenim pogledom pod nazivom{name}“ koji je već učitan, kada imate jedan pod tim imenom.",
+              "src": "machine",
+              "h": "e293ae5cd978"
+            },
+            "helpMenuTitle": {
+              "t": "Dugmad u svakom redu",
+              "src": "machine",
+              "h": "f28662d25ea0"
+            },
+            "helpMenuIntro": {
+              "t": "Svaki red ima ista dugmad, ovim redom. Uperite na jedan da vidite šta radi, ili koristite Pokažite šta svaka radnja radi iznad liste.",
+              "src": "machine",
+              "h": "1220567a8082"
+            },
+            "helpMenuLoad": {
+              "t": "Uèitaj: vrati taj saèuvani pogled na mapu.",
+              "src": "machine",
+              "h": "bce9a4f36971"
+            },
+            "helpMenuRename": {
+              "t": "Preimenuj: daje saèuvanom pogledu drugo ime.",
+              "src": "machine",
+              "h": "60c81484035a"
+            },
+            "helpMenuDownload": {
+              "t": "Preuzimanje: čuva taj jedan pogled na datoteku na vašem računaru.",
+              "src": "machine",
+              "h": "eaa3d54862ab"
+            },
+            "helpMenuClear": {
+              "t": "Čista grafika: skida crteže tog pogleda sa mape i ostavlja spašeni pogled u listi.",
+              "src": "machine",
+              "h": "0a223bab4d22"
+            },
+            "helpMenuDelete": {
+              "t": "Izbriši: uklanja saèuvani pogled zauvek. Od vas se traži da prvo potvrdite.",
+              "src": "machine",
+              "h": "905ceed3e512"
+            },
+            "helpShareTitle": {
+              "t": "Deljenje sa kolegom",
+              "src": "machine",
+              "h": "02e3d3b9a79f"
+            },
+            "helpShareIntro": {
+              "t": "Sačuvani pogledi ostaju u vašem pretraživaču, tako da deljenje jednog znači slanje datoteke.",
+              "src": "machine",
+              "h": "b0f0d605157c"
+            },
+            "helpShare1": {
+              "t": "Preuzimanje svih na dnu stavlja svaki pogled na listu u jedan fajl. Preuzimanje u jednom redu šalje samo taj.",
+              "src": "machine",
+              "h": "c7e4959bd0e3"
+            },
+            "helpShare2": {
+              "t": "Druga osoba bira sluèajeve slanja na dnu i bira fajl koji ste poslali.",
+              "src": "machine",
+              "h": "e9f836e48542"
+            },
+            "helpShare3": {
+              "t": "Ako je ime koje već imaju u datoteci, pitaju se da li da ga zamene ili da ostanu postojeći.",
+              "src": "machine",
+              "h": "f8869bd0a90a"
+            },
+            "helpShare4": {
+              "t": "Oboje morate da koristite istu mapu da bi fajl imao smisla.",
+              "src": "machine",
+              "h": "8adf2fb74e5b"
+            },
+            "helpOrganizeTitle": {
+              "t": "Pronalaženje onoga što si spasio.",
+              "src": "machine",
+              "h": "b9514f367e3c"
+            },
+            "helpOrganize1": {
+              "t": "Filter po imenu iznad liste krije sve što ne odgovara onome što ukucate.",
+              "src": "machine",
+              "h": "1f0d40ea2f4f"
+            },
+            "helpOrganize2": {
+              "t": "Sortiraj instance preuređuju listu: Najnoviji prvi, Najstariji prvi, Ime (A-Z) ili Ime (Z-A).",
+              "src": "machine",
+              "h": "7d77dfd91e34"
+            },
+            "helpOrganize3": {
+              "t": "\\\"Spašena kolona\\\" pokazuje datum kada je svaka od njih napravljena.",
+              "src": "machine",
+              "h": "7cf2e082079f"
+            },
+            "helpKeepTitle": {
+              "t": "Gde se ovo èuva?",
+              "src": "machine",
+              "h": "06ad3460f7f4"
+            },
+            "helpKeepIntro": {
+              "t": "Ništa ovde nije pohranjeno na serveru.",
+              "src": "machine",
+              "h": "fb544b457a1d"
+            },
+            "helpKeep1": {
+              "t": "Sačuvani pogledi se čuvaju u ovom pretraživaču, na ovom računaru. Niko drugi ne može da ih vidi.",
+              "src": "machine",
+              "h": "ace7034167d3"
+            },
+            "helpKeep2": {
+              "t": "Drugačiji pretraživač, drugačiji računar ili privatni prozor prikazuje prazan spisak.",
+              "src": "machine",
+              "h": "692e559d73cf"
+            },
+            "helpKeep3": {
+              "t": "Brisanje podataka o pregledu ili stranici ih briše. Prvo preuzmite sve ako želite kopiju.",
+              "src": "machine",
+              "h": "87db6787ebee"
+            },
+            "helpTroubleTitle": {
+              "t": "Ako nešto nije u redu",
+              "src": "machine",
+              "h": "6f7fec3ff1e0"
+            },
+            "helpTroubleSave": {
+              "t": "Spremi instancu ostaje siva: kutija sa imenom je prazna, ili ovaj grafički element nije povezan sa mapom. Ukucaj ime i reci GIS diviziji ako je još siva.",
+              "src": "machine",
+              "h": "865964ea3ea2"
+            },
+            "helpTroubleDuplicate": {
+              "t": "Piše da ime već postoji: drugi spašeni pogled ima to ime. Odaberite drugo ime, ili preimenujte prvo staro.",
+              "src": "machine",
+              "h": "69d7bbb511fc"
+            },
+            "helpTroubleNoChange": {
+              "t": "Učitavanje izgleda da ništa ne menja: pogled je sačuvan na drugoj mapi, ili ti slojevi više nisu u ovoj aplikaciji. Upozorenje se pojavljuje kada se mapa ne poklapa.",
+              "src": "machine",
+              "h": "6b65edb49ed5"
+            },
+            "helpTroubleLimit": {
+              "t": "Kaže da ste dostigli ograničenje: ova aplikacija čuva najviše {max} sačuvanih pregleda. Izbrišite jedan, a zatim ponovo spremite.",
+              "src": "machine",
+              "h": "8556e7071946"
+            },
+            "helpTroubleStorage": {
+              "t": "Kaže da je skladište puno ili nedostupno: pretraživaču je ponestalo prostora, ili blokira skladište. Izbrišite nekoliko sačuvanih pogleda, ili ostavite privatno pregledavanje.",
+              "src": "machine",
+              "h": "141848d146e4"
+            },
+            "helpTroubleUpload": {
+              "t": "Upload instance neće uzeti datoteku: samo .txt datoteka preuzeta iz ovog grafičkog elementa radi. Nemojte preimenovati ili uređivati taj fajl.",
+              "src": "machine",
+              "h": "c551dfdfb3a4"
+            },
+            "helpTroubleGone": {
+              "t": "Lista je prazna i nije bila pre: pregledavanje podataka je očišćeno, ili je ovo drugačiji pretraživač ili računar.",
+              "src": "machine",
+              "h": "738ba2dc3e60"
+            },
+            "helpTroubleContact": {
+              "t": "Još uvek zaglavljen? Kontaktirajte GIS diviziju i pomenite ime Save Instance i ovu aplikaciju.",
+              "src": "machine",
+              "h": "ab1bc041e227"
+            },
+            "helpTipsTitle": {
+              "t": "Dobro je znati.",
+              "src": "machine",
+              "h": "79fc372dc790"
+            },
+            "helpTips1": {
+              "t": "Kratka imena najbolje funkcionišu. Listu je lakše čitati i lakše filtrirati.",
+              "src": "machine",
+              "h": "12ee817889cb"
+            },
+            "helpTips2": {
+              "t": "Izaberi preuzimanje svega tu i tamo, tako da te èisti preglednik ne košta svega.",
+              "src": "machine",
+              "h": "a98abdde9a5d"
+            },
+            "helpTips3": {
+              "t": "Èista grafika skida samo crteže sa mape.",
+              "src": "machine",
+              "h": "b59edad4277b"
+            },
+            "unknownError": {
+              "t": "nepoznata greška",
+              "src": "machine",
+              "h": "af6321ca7a8b"
+            },
+            "unserializableError": {
+              "t": "Neserijalizacijska greška",
+              "src": "machine",
+              "h": "76e73551597a"
+            }
+          }
         },
         "sv": {
           "file": "6d33ee2f6332",
@@ -20534,18 +22287,89 @@
           }
         },
         "bs": {
-          "file": "638ef5868e7f",
+          "file": "ec48b920f450",
           "counts": {
             "esri": 4,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 14,
             "stale": 0,
-            "missing": 14
+            "missing": 0
           },
-          "entries": {}
+          "entries": {
+            "selectMapHint": {
+              "t": "Izaberite grafički element mape koji će ovaj alat snimiti i vratiti.",
+              "src": "machine",
+              "h": "0ba27b22ddfd"
+            },
+            "captureSection": {
+              "t": "Šta snimiti",
+              "src": "machine",
+              "h": "72390bc301ac"
+            },
+            "captureViewpoint": {
+              "t": "Viewpoint (središte, ljestvica, rotacija, 3D kamera)",
+              "src": "machine",
+              "h": "f3f7698bdadb"
+            },
+            "captureLayers": {
+              "t": "Vidljivost i neprozirnost sloja",
+              "src": "machine",
+              "h": "386b77211a4e"
+            },
+            "captureFilters": {
+              "t": "Definicije izraza i oznaka",
+              "src": "machine",
+              "h": "785ae863f313"
+            },
+            "captureTime": {
+              "t": "Vremenski opseg (pozicija klizača)",
+              "src": "machine",
+              "h": "aa3a7894d3bd"
+            },
+            "captureGraphics": {
+              "t": "Grafički prikaz (uključujući crtanje/skeč)",
+              "src": "machine",
+              "h": "9004f134b908"
+            },
+            "limitsSection": {
+              "t": "Ograničenja i pokretanje",
+              "src": "machine",
+              "h": "7b5e487c0f35"
+            },
+            "maxInstances": {
+              "t": "Maksimalne snimljene instance",
+              "src": "machine",
+              "h": "4bc2599817d7"
+            },
+            "maxInstancesHint": {
+              "t": "Postavi na 0 bez ograničenja.",
+              "src": "machine",
+              "h": "b933e3f180a9"
+            },
+            "defaultInstance": {
+              "t": "Učitaj ovu instancu pri pokretanju",
+              "src": "machine",
+              "h": "c1bf599655c3"
+            },
+            "defaultInstanceHint": {
+              "t": "Upišite tačno ime snimljene instance ili ostavite prazno.",
+              "src": "machine",
+              "h": "62d6967690ea"
+            },
+            "showHelpGuide": {
+              "t": "Pokaži vodič za pomoć",
+              "src": "machine",
+              "h": "03e9f0b81336"
+            },
+            "showTheQuestionMarkButtonThat": {
+              "t": "Pokaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkog elementa",
+              "src": "machine",
+              "h": "62c4e81a84ca"
+            }
+          }
         },
         "ca": {
           "file": "691b208dd563",
@@ -21303,18 +23127,89 @@
           }
         },
         "hr": {
-          "file": "638ef5868e7f",
+          "file": "6524316df359",
           "counts": {
             "esri": 4,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 14,
             "stale": 0,
-            "missing": 14
+            "missing": 0
           },
-          "entries": {}
+          "entries": {
+            "selectMapHint": {
+              "t": "Odaberite map widget ovaj alat će spremiti i vratiti.",
+              "src": "machine",
+              "h": "0ba27b22ddfd"
+            },
+            "captureSection": {
+              "t": "Što spremiti",
+              "src": "machine",
+              "h": "72390bc301ac"
+            },
+            "captureViewpoint": {
+              "t": "Viewpoint (središte, ljestvica, rotacija, 3D kamera)",
+              "src": "machine",
+              "h": "f3f7698bdadb"
+            },
+            "captureLayers": {
+              "t": "Slojevita vidljivost i neprozirnost",
+              "src": "machine",
+              "h": "386b77211a4e"
+            },
+            "captureFilters": {
+              "t": "Definicije izraza i oznaka",
+              "src": "machine",
+              "h": "785ae863f313"
+            },
+            "captureTime": {
+              "t": "Vremenski opseg (položaj vremenskog klizača)",
+              "src": "machine",
+              "h": "aa3a7894d3bd"
+            },
+            "captureGraphics": {
+              "t": "Grafika (uključujući crtanje/košaricu)",
+              "src": "machine",
+              "h": "9004f134b908"
+            },
+            "limitsSection": {
+              "t": "Ograničenja i pokretanje",
+              "src": "machine",
+              "h": "7b5e487c0f35"
+            },
+            "maxInstances": {
+              "t": "Maksimalno spremljene instance",
+              "src": "machine",
+              "h": "4bc2599817d7"
+            },
+            "maxInstancesHint": {
+              "t": "Postavi na 0 bez ograničenja.",
+              "src": "machine",
+              "h": "b933e3f180a9"
+            },
+            "defaultInstance": {
+              "t": "Učitaj ovu instancu prilikom pokretanja",
+              "src": "machine",
+              "h": "c1bf599655c3"
+            },
+            "defaultInstanceHint": {
+              "t": "Upišite točno ime snimljene instance, ili ostavite prazno.",
+              "src": "machine",
+              "h": "62d6967690ea"
+            },
+            "showHelpGuide": {
+              "t": "Prikaži vodič pomoći",
+              "src": "machine",
+              "h": "03e9f0b81336"
+            },
+            "showTheQuestionMarkButtonThat": {
+              "t": "Prikaži gumb s upitnikom koji otvara vodič za pomoć widgetu",
+              "src": "machine",
+              "h": "62c4e81a84ca"
+            }
+          }
         },
         "hu": {
           "file": "3b4e1cdd2511",
@@ -22517,18 +24412,89 @@
           }
         },
         "sr": {
-          "file": "9d2be3b11ae5",
+          "file": "70794e240d10",
           "counts": {
             "esri": 3,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 0,
+            "machine": 14,
             "stale": 0,
-            "missing": 14
+            "missing": 0
           },
-          "entries": {}
+          "entries": {
+            "selectMapHint": {
+              "t": "Odaberite grafički element mape koji će ovaj alat spremiti i vratiti.",
+              "src": "machine",
+              "h": "0ba27b22ddfd"
+            },
+            "captureSection": {
+              "t": "Šta da saèuvam?",
+              "src": "machine",
+              "h": "72390bc301ac"
+            },
+            "captureViewpoint": {
+              "t": "Viewpoint (središte, skala, rotacija, 3D kamera)",
+              "src": "machine",
+              "h": "f3f7698bdadb"
+            },
+            "captureLayers": {
+              "t": "Vidljivost i neprozirnost sloja",
+              "src": "machine",
+              "h": "386b77211a4e"
+            },
+            "captureFilters": {
+              "t": "Definicioni izrazi i oznake",
+              "src": "machine",
+              "h": "785ae863f313"
+            },
+            "captureTime": {
+              "t": "Vremenska mera (vremenska pozicija klizača)",
+              "src": "machine",
+              "h": "aa3a7894d3bd"
+            },
+            "captureGraphics": {
+              "t": "Графике (укључујући цртеж/скеч)",
+              "src": "machine",
+              "h": "9004f134b908"
+            },
+            "limitsSection": {
+              "t": "Ograničenja i pokretanja",
+              "src": "machine",
+              "h": "7b5e487c0f35"
+            },
+            "maxInstances": {
+              "t": "Maksimalno spremljene instance",
+              "src": "machine",
+              "h": "4bc2599817d7"
+            },
+            "maxInstancesHint": {
+              "t": "Podesite na 0 bez limita.",
+              "src": "machine",
+              "h": "b933e3f180a9"
+            },
+            "defaultInstance": {
+              "t": "Učitaj ovu instancu prilikom pokretanja",
+              "src": "machine",
+              "h": "c1bf599655c3"
+            },
+            "defaultInstanceHint": {
+              "t": "Ukucaj taèno ime saèuvane instance, ili ostavi prazno.",
+              "src": "machine",
+              "h": "62d6967690ea"
+            },
+            "showHelpGuide": {
+              "t": "Pokaži vodič za pomoć",
+              "src": "machine",
+              "h": "03e9f0b81336"
+            },
+            "showTheQuestionMarkButtonThat": {
+              "t": "Prikaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkom elementu",
+              "src": "machine",
+              "h": "62c4e81a84ca"
+            }
+          }
         },
         "sv": {
           "file": "e8c0cf85e88d",

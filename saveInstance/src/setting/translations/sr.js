@@ -4,23 +4,23 @@ System.register([], function (e) {
     execute: function () {
       e({
         selectMap: "Izaberi mapu",
-        selectMapHint: "Choose the map widget this tool will save and restore.",
-        captureSection: "What to save",
-        captureViewpoint: "Viewpoint (center, scale, rotation, 3D camera)",
-        captureLayers: "Layer visibility and opacity",
-        captureFilters: "Definition expressions and labels",
+        selectMapHint: "Odaberite grafički element mape koji će ovaj alat spremiti i vratiti.",
+        captureSection: "Šta da saèuvam?",
+        captureViewpoint: "Viewpoint (središte, skala, rotacija, 3D kamera)",
+        captureLayers: "Vidljivost i neprozirnost sloja",
+        captureFilters: "Definicioni izrazi i oznake",
         captureBasemap: "Pozadinska mapa",
-        captureTime: "Time extent (time slider position)",
-        captureGraphics: "Graphics (including Draw/Sketch)",
-        limitsSection: "Limits and startup",
-        maxInstances: "Maximum saved instances",
-        maxInstancesHint: "Set to 0 for no limit.",
-        defaultInstance: "Load this instance on startup",
-        defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
+        captureTime: "Vremenska mera (vremenska pozicija klizača)",
+        captureGraphics: "Графике (укључујући цртеж/скеч)",
+        limitsSection: "Ograničenja i pokretanja",
+        maxInstances: "Maksimalno spremljene instance",
+        maxInstancesHint: "Podesite na 0 bez limita.",
+        defaultInstance: "Učitaj ovu instancu prilikom pokretanja",
+        defaultInstanceHint: "Ukucaj taèno ime saèuvane instance, ili ostavi prazno.",
         defaultInstanceNone: "Nijedan",
         help: "Pomoć",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Pokaži vodič za pomoć",
+        showTheQuestionMarkButtonThat: "Prikaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkom elementu"
       })
     }
   }

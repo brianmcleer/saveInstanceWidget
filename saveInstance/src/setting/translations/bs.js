@@ -4,23 +4,23 @@ System.register([], function (e) {
     execute: function () {
       e({
         selectMap: "Odaberi kartu",
-        selectMapHint: "Choose the map widget this tool will save and restore.",
-        captureSection: "What to save",
-        captureViewpoint: "Viewpoint (center, scale, rotation, 3D camera)",
-        captureLayers: "Layer visibility and opacity",
-        captureFilters: "Definition expressions and labels",
+        selectMapHint: "Izaberite grafički element mape koji će ovaj alat snimiti i vratiti.",
+        captureSection: "Šta snimiti",
+        captureViewpoint: "Viewpoint (središte, ljestvica, rotacija, 3D kamera)",
+        captureLayers: "Vidljivost i neprozirnost sloja",
+        captureFilters: "Definicije izraza i oznaka",
         captureBasemap: "Kartografska podloga",
-        captureTime: "Time extent (time slider position)",
-        captureGraphics: "Graphics (including Draw/Sketch)",
-        limitsSection: "Limits and startup",
-        maxInstances: "Maximum saved instances",
-        maxInstancesHint: "Set to 0 for no limit.",
-        defaultInstance: "Load this instance on startup",
-        defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
+        captureTime: "Vremenski opseg (pozicija klizača)",
+        captureGraphics: "Grafički prikaz (uključujući crtanje/skeč)",
+        limitsSection: "Ograničenja i pokretanje",
+        maxInstances: "Maksimalne snimljene instance",
+        maxInstancesHint: "Postavi na 0 bez ograničenja.",
+        defaultInstance: "Učitaj ovu instancu pri pokretanju",
+        defaultInstanceHint: "Upišite tačno ime snimljene instance ili ostavite prazno.",
         defaultInstanceNone: "Nema",
         help: "Pomoć",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Pokaži vodič za pomoć",
+        showTheQuestionMarkButtonThat: "Pokaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkog elementa"
       })
     }
   }

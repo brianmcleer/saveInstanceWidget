@@ -4,23 +4,23 @@ System.register([], function (e) {
     execute: function () {
       e({
         selectMap: "Odaberi kartu",
-        selectMapHint: "Choose the map widget this tool will save and restore.",
-        captureSection: "What to save",
-        captureViewpoint: "Viewpoint (center, scale, rotation, 3D camera)",
-        captureLayers: "Layer visibility and opacity",
-        captureFilters: "Definition expressions and labels",
+        selectMapHint: "Odaberite map widget ovaj alat će spremiti i vratiti.",
+        captureSection: "Što spremiti",
+        captureViewpoint: "Viewpoint (središte, ljestvica, rotacija, 3D kamera)",
+        captureLayers: "Slojevita vidljivost i neprozirnost",
+        captureFilters: "Definicije izraza i oznaka",
         captureBasemap: "Kartografska podloga",
-        captureTime: "Time extent (time slider position)",
-        captureGraphics: "Graphics (including Draw/Sketch)",
-        limitsSection: "Limits and startup",
-        maxInstances: "Maximum saved instances",
-        maxInstancesHint: "Set to 0 for no limit.",
-        defaultInstance: "Load this instance on startup",
-        defaultInstanceHint: "Type the exact name of a saved instance, or leave blank.",
+        captureTime: "Vremenski opseg (položaj vremenskog klizača)",
+        captureGraphics: "Grafika (uključujući crtanje/košaricu)",
+        limitsSection: "Ograničenja i pokretanje",
+        maxInstances: "Maksimalno spremljene instance",
+        maxInstancesHint: "Postavi na 0 bez ograničenja.",
+        defaultInstance: "Učitaj ovu instancu prilikom pokretanja",
+        defaultInstanceHint: "Upišite točno ime snimljene instance, ili ostavite prazno.",
         defaultInstanceNone: "Nema",
         help: "Pomoć",
-        showHelpGuide: "Show help guide",
-        showTheQuestionMarkButtonThat: "Show the question-mark button that opens the widget help guide"
+        showHelpGuide: "Prikaži vodič pomoći",
+        showTheQuestionMarkButtonThat: "Prikaži gumb s upitnikom koji otvara vodič za pomoć widgetu"
       })
     }
   }
