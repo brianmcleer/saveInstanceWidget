@@ -129,7 +129,7 @@ System.register([], function (e) {
         helpTroubleUpload: "Upload instance neće uzeti datoteku: samo .txt datoteka preuzeta iz ovog grafičkog elementa radi. Nemojte preimenovati ili urediti tu datoteku.",
         helpTroubleGone: "Popis je prazan i nije bio prije: pregledavanje podataka je izbrisano, ili je ovo drugačiji preglednik ili računalo.",
         helpTroubleContact: "Još uvijek zaglavi? Kontaktirajte GIS Division i spomenite Save Instance ime i ovu aplikaciju.",
-        helpTipsTitle: "Dobro je znati.",
+        helpTipsTitle: "Dobro je znati",
         helpTips1: "Kratki nazivi rade najbolje. Lista je lakše čitati i lakše filtrirati.",
         helpTips2: "Odaberite Preuzmite sve s vremena na vrijeme, tako da izbrisani preglednik ne košta vas sve.",
         helpTips3: "Čista grafika skida samo crteže s karte. Ona nikada ne briše spremljen pogled.",

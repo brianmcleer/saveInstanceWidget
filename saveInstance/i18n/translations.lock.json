@@ -1261,14 +1261,14 @@
           }
         },
         "bs": {
-          "file": "00cd20676219",
+          "file": "d885f464fdba",
           "counts": {
-            "esri": 13,
+            "esri": 22,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 115,
+            "machine": 106,
             "stale": 0,
             "missing": 4
           },
@@ -1533,35 +1533,10 @@
               "src": "machine",
               "h": "d9f7c7b00a9e"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodiču ne odgovara toj riječi.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovdje?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Postavite kartu kako želite, unesite skraćeno ime u gore navedenu kutiju, a zatim odaberite Save instance.",
               "src": "machine",
               "h": "3bfd17569ed5"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodič.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Počnite ovdje: tri koraka",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Postavi kartu kako želite: uvećaj na pravo mjesto, uključi ili isključi slojeve, izaberi pozadinu.",
@@ -1773,11 +1748,6 @@
               "src": "machine",
               "h": "87db6787ebee"
             },
-            "helpTroubleTitle": {
-              "t": "Ako nešto nije u redu",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
-            },
             "helpTroubleSave": {
               "t": "Snimi instancu ostaje siva: okvir za ime je prazan ili ovaj grafički element nije spojen na mapu. Upišite ime i recite GIS diviziji ako je još uvijek sivo.",
               "src": "machine",
@@ -1818,11 +1788,6 @@
               "src": "machine",
               "h": "ab1bc041e227"
             },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
-            },
             "helpTips1": {
               "t": "Kratki nazivi najbolje funkcioniraju. Listu je lakše čitati i lakše filtrirati.",
               "src": "machine",
@@ -1837,16 +1802,6 @@
               "t": "Čista grafika uklanja samo crteže sa mape. Ona nikada ne briše snimljeni pogled.",
               "src": "machine",
               "h": "b59edad4277b"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             }
           }
         },
@@ -7466,14 +7421,14 @@
           }
         },
         "hr": {
-          "file": "1b33153b6331",
+          "file": "bf8e0acd8a99",
           "counts": {
-            "esri": 13,
+            "esri": 22,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 118,
+            "machine": 109,
             "stale": 0,
             "missing": 1
           },
@@ -7748,35 +7703,10 @@
               "src": "machine",
               "h": "d9f7c7b00a9e"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodiču ne odgovara toj riječi. Pokušajte drugi, ili otvorite dijelove iznad.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovdje?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Postavite kartu kako želite, unesite kratko ime u okvir iznad, a zatim odaberite Save instance.",
               "src": "machine",
               "h": "3bfd17569ed5"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodič.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Počnite ovdje: tri koraka",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Postavite kartu kako želite: zumirajte na pravo mjesto, uključite ili isključite slojeve, izaberite pozadinu.",
@@ -7993,11 +7923,6 @@
               "src": "machine",
               "h": "87db6787ebee"
             },
-            "helpTroubleTitle": {
-              "t": "Ako nešto izgleda loše",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
-            },
             "helpTroubleSave": {
               "t": "Spremi instancu ostaje siva: ime okvir je prazan, ili ovaj widget nije spojen na kartu. Upišite ime, i recite GIS Division ako je još uvijek sive van.",
               "src": "machine",
@@ -8038,11 +7963,6 @@
               "src": "machine",
               "h": "ab1bc041e227"
             },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
-            },
             "helpTips1": {
               "t": "Kratki nazivi rade najbolje. Lista je lakše čitati i lakše filtrirati.",
               "src": "machine",
@@ -8057,16 +7977,6 @@
               "t": "Čista grafika skida samo crteže s karte. Ona nikada ne briše spremljen pogled.",
               "src": "machine",
               "h": "b59edad4277b"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             }
           }
         },
@@ -17031,14 +16941,14 @@
           }
         },
         "sr": {
-          "file": "277f291a1b95",
+          "file": "d4ef34ffd322",
           "counts": {
-            "esri": 13,
+            "esri": 22,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 117,
+            "machine": 108,
             "stale": 0,
             "missing": 2
           },
@@ -17313,35 +17223,10 @@
               "src": "machine",
               "h": "d9f7c7b00a9e"
             },
-            "helpNoMatches": {
-              "t": "Ništa u vodièu ne odgovara toj reèi.",
-              "src": "machine",
-              "h": "3fe179f75330"
-            },
-            "firstRunTitle": {
-              "t": "Novi ovde?",
-              "src": "machine",
-              "h": "b81f2e17e001"
-            },
             "firstRunBody": {
               "t": "Podesite mapu kako želite, ukucajte kratko ime u kutiju iznad, onda izaberite Save instance.",
               "src": "machine",
               "h": "3bfd17569ed5"
-            },
-            "firstRunHelpLink": {
-              "t": "Otvori vodiè.",
-              "src": "machine",
-              "h": "2447dd6134ea"
-            },
-            "firstRunDismiss": {
-              "t": "Otpust.",
-              "src": "machine",
-              "h": "70afe9eff3f2"
-            },
-            "helpStartTitle": {
-              "t": "Poènite ovde: tri koraka.",
-              "src": "machine",
-              "h": "789320b4831d"
             },
             "helpStart1": {
               "t": "Postavite mapu kako želite: zumirajte na pravo mesto, uključite ili isključite slojeve, izaberite pozadinu.",
@@ -17553,11 +17438,6 @@
               "src": "machine",
               "h": "87db6787ebee"
             },
-            "helpTroubleTitle": {
-              "t": "Ako nešto nije u redu",
-              "src": "machine",
-              "h": "6f7fec3ff1e0"
-            },
             "helpTroubleSave": {
               "t": "Spremi instancu ostaje siva: kutija sa imenom je prazna, ili ovaj grafički element nije povezan sa mapom. Ukucaj ime i reci GIS diviziji ako je još siva.",
               "src": "machine",
@@ -17598,11 +17478,6 @@
               "src": "machine",
               "h": "ab1bc041e227"
             },
-            "helpTipsTitle": {
-              "t": "Dobro je znati.",
-              "src": "machine",
-              "h": "79fc372dc790"
-            },
             "helpTips1": {
               "t": "Kratka imena najbolje funkcionišu. Listu je lakše čitati i lakše filtrirati.",
               "src": "machine",
@@ -17617,16 +17492,6 @@
               "t": "Èista grafika skida samo crteže sa mape.",
               "src": "machine",
               "h": "b59edad4277b"
-            },
-            "unknownError": {
-              "t": "nepoznata greška",
-              "src": "machine",
-              "h": "af6321ca7a8b"
-            },
-            "unserializableError": {
-              "t": "Neserijalizacijska greška",
-              "src": "machine",
-              "h": "76e73551597a"
             }
           }
         },
@@ -22289,12 +22154,12 @@
         "bs": {
           "file": "ec48b920f450",
           "counts": {
-            "esri": 4,
+            "esri": 6,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 14,
+            "machine": 12,
             "stale": 0,
             "missing": 0
           },
@@ -22358,16 +22223,6 @@
               "t": "Upišite tačno ime snimljene instance ili ostavite prazno.",
               "src": "machine",
               "h": "62d6967690ea"
-            },
-            "showHelpGuide": {
-              "t": "Pokaži vodič za pomoć",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "showTheQuestionMarkButtonThat": {
-              "t": "Pokaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkog elementa",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             }
           }
         },
@@ -23129,12 +22984,12 @@
         "hr": {
           "file": "6524316df359",
           "counts": {
-            "esri": 4,
+            "esri": 6,
             "esri-check": 0,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 14,
+            "machine": 12,
             "stale": 0,
             "missing": 0
           },
@@ -23198,16 +23053,6 @@
               "t": "Upišite točno ime snimljene instance, ili ostavite prazno.",
               "src": "machine",
               "h": "62d6967690ea"
-            },
-            "showHelpGuide": {
-              "t": "Prikaži vodič pomoći",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "showTheQuestionMarkButtonThat": {
-              "t": "Prikaži gumb s upitnikom koji otvara vodič za pomoć widgetu",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             }
           }
         },
@@ -24414,12 +24259,12 @@
         "sr": {
           "file": "70794e240d10",
           "counts": {
-            "esri": 3,
+            "esri": 5,
             "esri-check": 1,
             "community": 0,
             "manual": 0,
             "existing": 0,
-            "machine": 14,
+            "machine": 12,
             "stale": 0,
             "missing": 0
           },
@@ -24483,16 +24328,6 @@
               "t": "Ukucaj taèno ime saèuvane instance, ili ostavi prazno.",
               "src": "machine",
               "h": "62d6967690ea"
-            },
-            "showHelpGuide": {
-              "t": "Pokaži vodič za pomoć",
-              "src": "machine",
-              "h": "03e9f0b81336"
-            },
-            "showTheQuestionMarkButtonThat": {
-              "t": "Prikaži dugme sa znakom pitanja koje otvara vodič za pomoć grafičkom elementu",
-              "src": "machine",
-              "h": "62c4e81a84ca"
             }
           }
         },
